@@ -1093,6 +1093,11 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/dm-serif-display/-/dm-serif-display-0.2.2.tgz#288903efb22c516b728a40f16dc6ffb3dd0f3b39"
   integrity sha512-Yi0+9lIoE6dp+m+KvcE9RoSurBjk6Ci2Xx8y8ATjWx0xujKepT+hRWcSuahbaZhPd5vWI5V4DrybOUZT74p4Tw==
 
+"@expo-google-fonts/inter@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/inter/-/inter-0.2.2.tgz#bd5624be6c92e7621aa9ddb5bd72757604729121"
+  integrity sha512-dU6mSczI2xkRZbUhQQ5VB+D4AqLOF8ufCIfA1iBjrPZ/Qnka88E5Ez2Mvm41exdKR76norVvYD5GJIQYEEoO/Q==
+
 "@expo/config-plugins@4.0.17", "@expo/config-plugins@^4.0.16", "@expo/config-plugins@^4.0.2":
   version "4.0.17"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.17.tgz#d5a7790ec65bc84301c13d335cb1d7a35e4bcbca"
