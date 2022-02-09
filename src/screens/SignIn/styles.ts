@@ -1,5 +1,5 @@
 import { getStatusBarHeight } from "react-native-iphone-x-helper"
-import { RFValue } from "react-native-responsive-fontsize"
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 import styled from "styled-components/native"
 
 export const Container = styled.View`
@@ -14,7 +14,7 @@ export const Content = styled.View`
 export const Photo = styled.Image`
   margin-top: ${getStatusBarHeight() + 50}px;
   width: 100%;
-  height: 364px;
+  height: ${RFPercentage(45)}px;
 `
 
 export const Form = styled.View`
