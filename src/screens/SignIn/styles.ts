@@ -28,6 +28,6 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
   color: ${({ theme }) => theme.COLORS.TITLE};
   font-family: ${({ theme }) => theme.FONTS.TEXT};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   align-self: flex-end;
 `

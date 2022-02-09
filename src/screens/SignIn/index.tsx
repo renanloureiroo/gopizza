@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native"
+import { Button } from "@components/Button"
 
 export const SignIn = () => {
   const [email, setEmail] = useState("")
@@ -42,6 +43,7 @@ export const SignIn = () => {
 
               <Subtitle>Esqueci minha senha</Subtitle>
             </Form>
+            <Button title="Entrar" />
           </Content>
         </KeyboardAvoidingView>
       </LinearGradient>
