@@ -63,8 +63,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
   async function signOut() {
     try {
-      await AsyncStorage.removeItem(USER_COLLECTION)
       await auth().signOut()
+      await AsyncStorage.removeItem(USER_COLLECTION)
       setUser(null)
     } catch (err) {
       throw new Error(err)
