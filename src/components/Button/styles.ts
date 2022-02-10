@@ -1,12 +1,12 @@
-import { TouchableOpacity } from "react-native"
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 import styled from "styled-components/native"
+import { RectButton } from "react-native-gesture-handler"
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 
 interface Props {
   backgroundColor: string
 }
 
-export const Container = styled(TouchableOpacity)<Props>`
+export const Container = styled(RectButton)<Props>`
   width: 100%;
   height: ${RFPercentage(8)}px;
   background: ${({ backgroundColor }) => backgroundColor};
