@@ -2,6 +2,8 @@ import styled from "styled-components/native"
 import { RectButton } from "react-native-gesture-handler"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 
+import { Circle } from "react-native-progress"
+
 interface Props {
   type: "primary" | "secondary"
 }
@@ -28,3 +30,9 @@ export const Title = styled.Text`
   font-size: ${RFValue(14)}px;
   color: ${({ theme }) => theme.COLORS.TITLE};
 `
+
+export const Loading = styled(Circle).attrs(({ theme }) => ({
+  size: RFValue(14),
+  color: theme.COLORS.TITLE,
+  indeterminate: true,
+}))``
