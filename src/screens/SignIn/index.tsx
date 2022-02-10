@@ -16,7 +16,6 @@ export const SignIn = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const theme = useTheme()
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView behavior="position" enabled style={{ flex: 1 }}>
@@ -37,7 +36,7 @@ export const SignIn = () => {
 
             <Subtitle>Esqueci minha senha</Subtitle>
           </Form>
-          <Button title="Entrar" isLoading />
+          <Button title="Entrar" />
         </Container>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

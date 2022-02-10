@@ -10,7 +10,7 @@ interface Props {
 
 export const Container = styled(RectButton)<Props>`
   background: ${({ type, theme }) =>
-    type === "primary" ? theme.COLORS.PRIMARY_800 : theme.COLORS.PRIMARY_900};
+    type === "primary" ? theme.COLORS.PRIMARY_800 : theme.COLORS.SUCCESS_900};
 
   flex: 1;
   max-height: ${RFPercentage(8)}px;
