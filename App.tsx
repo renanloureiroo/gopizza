@@ -14,6 +14,8 @@ import { SignIn } from "@screens/SignIn"
 import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
+import { AppProvider } from "./src/contexts"
+
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ])
@@ -30,10 +32,10 @@ export default function App() {
   }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider theme={theme}>
+      <AppProvider>
         <StatusBar style="light" translucent backgroundColor="transparent" />
         <SignIn />
-      </ThemeProvider>
+      </AppProvider>
     </GestureHandlerRootView>
   )
 }
