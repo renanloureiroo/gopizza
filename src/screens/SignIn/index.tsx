@@ -1,9 +1,16 @@
 import React, { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient"
 
-import { Content, Form, Photo, Subtitle, Title } from "./styles"
+import {
+  Content,
+  Form,
+  Photo,
+  Subtitle,
+  Title,
+  PhotoWrapper,
+  Container,
+} from "./styles"
 import { useTheme } from "styled-components/native"
-import { StatusBar } from "expo-status-bar"
 
 import SignInPhoto from "@assets/images/sign-in-image.png"
 import { Input } from "@components/Input"
@@ -21,11 +28,12 @@ export const SignIn = () => {
   const theme = useTheme()
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <LinearGradient style={{ flex: 1 }} colors={theme.COLORS.GRADIENT}>
-        <StatusBar style="light" translucent backgroundColor="transparent" />
-        <KeyboardAvoidingView behavior="position" enabled style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior="position" enabled style={{ flex: 1 }}>
+        <Container>
           <Content>
-            <Photo resizeMode="contain" source={SignInPhoto} />
+            <PhotoWrapper>
+              <Photo resizeMode="contain" source={SignInPhoto} />
+            </PhotoWrapper>
 
             <Form>
               <Title>Login</Title>
@@ -45,8 +53,8 @@ export const SignIn = () => {
             </Form>
             <Button title="Entrar" />
           </Content>
-        </KeyboardAvoidingView>
-      </LinearGradient>
+        </Container>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )
 }

@@ -1,5 +1,5 @@
 import { TouchableOpacity } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 import styled from "styled-components/native"
 
 interface Props {
@@ -8,12 +8,14 @@ interface Props {
 
 export const Container = styled(TouchableOpacity)<Props>`
   width: 100%;
-  height: ${RFValue(56)}px;
+  height: ${RFPercentage(8)}px;
   background: ${({ backgroundColor }) => backgroundColor};
   border-radius: ${RFValue(12)}px;
 
   justify-content: center;
   align-items: center;
+
+  padding: 0 20px;
 
   margin: 20px 0;
 `

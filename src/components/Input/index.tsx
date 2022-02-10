@@ -5,6 +5,7 @@ import { useTheme } from "styled-components/native"
 import Icon from "@expo/vector-icons/MaterialIcons"
 
 import { Container, InputText, VisibilityButton } from "./styles"
+import { RFPercentage } from "react-native-responsive-fontsize"
 
 interface Props extends TextInputProps {
   type?: "email" | "password"
@@ -29,7 +30,7 @@ export const Input = ({ type = "email", ...rest }: Props) => {
         <VisibilityButton onPress={toggleVisibility}>
           <Icon
             name={!!isVisible ? "visibility" : "visibility-off"}
-            size={24}
+            size={RFPercentage(3.5)}
             color={theme.COLORS.TITLE}
           />
         </VisibilityButton>

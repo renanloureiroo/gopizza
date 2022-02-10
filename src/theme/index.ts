@@ -21,7 +21,7 @@ export default {
     SHAPE: "#DCDCDC",
     TITLE: "#FFF",
 
-    GRADIENT: ["#E03F50", "#B83341"],
+    GRADIENT: ["#B83341", "#E03F50"],
   },
 
   FONTS: {
