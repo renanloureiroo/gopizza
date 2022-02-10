@@ -26,7 +26,7 @@ export const Input = ({
     <Container>
       <InputText
         {...rest}
-        secureTextEntry={!isVisible}
+        secureTextEntry={type !== "email" || isVisible}
         themeInput={themeInput}
       />
       {type === "password" && (

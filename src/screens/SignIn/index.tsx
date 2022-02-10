@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useToast } from "react-native-styled-toast"
 
 import {
   Form,
@@ -29,6 +30,7 @@ export const SignIn = () => {
   const [loading, setLoading] = useState(false)
 
   const { signIn } = useAuth()
+  const { toast } = useToast()
 
   const handleSignIn = async () => {
     try {
@@ -36,6 +38,7 @@ export const SignIn = () => {
       setLoading(true)
       await signIn({ email, password })
     } catch (err) {
+      console.log(err)
     } finally {
       setLoading(false)
     }
