@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 interface AuthContextData {
   user: User | null
   signIn: ({}: SignInProps) => Promise<void>
+  signOut: () => Promise<void>
 }
 
 interface AuthContextProps {
@@ -60,6 +61,16 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }
   }
 
+  async function signOut() {
+    try {
+      await AsyncStorage.removeItem(USER_COLLECTION)
+      await auth().signOut()
+      setUser(null)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
   useEffect(() => {
     setIsStarted(true)
     const rehydrated = async () => {
@@ -80,7 +91,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ signIn, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   )
