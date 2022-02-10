@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { LogBox } from "react-native"
 
 import AppLoading from "expo-app-loading"
 
@@ -13,6 +13,10 @@ import theme from "./src/theme"
 import { SignIn } from "@screens/SignIn"
 import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+])
 
 export default function App() {
   const [fontsLoaded] = useFonts({

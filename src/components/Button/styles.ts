@@ -3,13 +3,16 @@ import { RectButton } from "react-native-gesture-handler"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 
 interface Props {
-  backgroundColor: string
+  type: "primary" | "secondary"
 }
 
 export const Container = styled(RectButton)<Props>`
-  width: 100%;
-  height: ${RFPercentage(8)}px;
-  background: ${({ backgroundColor }) => backgroundColor};
+  background: ${({ type, theme }) =>
+    type === "primary" ? theme.COLORS.PRIMARY_800 : theme.COLORS.PRIMARY_900};
+
+  flex: 1;
+  max-height: ${RFPercentage(8)}px;
+  min-height: ${RFPercentage(8)}px;
   border-radius: ${RFValue(12)}px;
 
   justify-content: center;
