@@ -6,18 +6,18 @@ import { Container, Title, Loading } from "./styles"
 type Props = RectButtonProps & {
   type?: "primary" | "secondary"
   title: string
-  loading?: boolean
+  isLoading?: boolean
 }
 
 export const Button = ({
   type = "primary",
-  loading = false,
+  isLoading = false,
   title,
   ...rest
 }: Props) => {
   return (
-    <Container {...rest} type={type} enabled={!loading}>
-      {loading ? <Loading /> : <Title>{title}</Title>}
+    <Container {...rest} type={type} enabled={!isLoading}>
+      {isLoading ? <Loading /> : <Title>{title}</Title>}
     </Container>
   )
 }

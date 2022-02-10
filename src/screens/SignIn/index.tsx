@@ -51,7 +51,7 @@ export const SignIn = () => {
 
               <Subtitle>Esqueci minha senha</Subtitle>
             </Form>
-            <Button title="Entrar" loading />
+            <Button title="Entrar" isLoading />
           </Content>
         </Container>
       </KeyboardAvoidingView>
