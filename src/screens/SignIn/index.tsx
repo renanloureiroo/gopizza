@@ -32,9 +32,9 @@ export const SignIn = () => {
   const { signIn } = useAuth()
 
   const handleSignIn = async () => {
+    setLoading(true)
     try {
       if (!email || !password) return
-      setLoading(true)
       await signIn({ email, password })
     } catch (err) {
       console.log(err.message)
@@ -50,7 +50,10 @@ export const SignIn = () => {
         console.log("Email inválido")
       }
 
-      if (err.message === "auth/user-not-found") {
+      if (
+        err.message === "auth/user-not-found" ||
+        err.message === "User not found"
+      ) {
         Toast.show({
           type: "error",
           text1: "Usuário não encontrado!",
