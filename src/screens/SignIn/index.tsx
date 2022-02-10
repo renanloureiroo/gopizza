@@ -20,10 +20,26 @@ import {
   TouchableWithoutFeedback,
 } from "react-native"
 import { Button } from "@components/Button"
+import { useAuth } from "@hooks/auth"
 
 export const SignIn = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const [loading, setLoading] = useState(false)
+
+  const { signIn } = useAuth()
+
+  const handleSignIn = async () => {
+    try {
+      if (!email || !password) return
+      setLoading(true)
+      await signIn({ email, password })
+    } catch (err) {
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -56,7 +72,7 @@ export const SignIn = () => {
                 <ForgotPasswordLabel>Esqueci minha senha</ForgotPasswordLabel>
               </ForgotPasswordButton>
             </Form>
-            <Button title="Entrar" />
+            <Button title="Entrar" onPress={handleSignIn} isLoading={loading} />
           </Content>
         </KeyboardAvoidingView>
       </Container>
