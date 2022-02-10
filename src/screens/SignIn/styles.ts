@@ -26,14 +26,16 @@ export const Content = styled.ScrollView.attrs({
   padding: 0px 32px;
 `
 
-export const PhotoWrapper = styled.View`
-  height: ${RFPercentage(50)}px;
+export const BrandWrapper = styled.View`
   padding-top: ${getStatusBarHeight() + 50}px;
+  height: ${RFPercentage(50)}px;
 `
 
-export const Photo = styled.Image`
-  width: 100%;
+export const Brand = styled.Image.attrs({
+  resizeMode: "contain",
+})`
   height: 100%;
+  width: 100%;
 `
 
 export const Form = styled.View`
@@ -50,9 +52,12 @@ export const Title = styled.Text`
     font-family: ${theme.FONTS.TITLE};
   `}
 `
-export const Subtitle = styled.Text`
-  font-size: ${RFValue(12)}px;
+export const ForgotPasswordButton = styled.TouchableOpacity`
   align-self: flex-end;
+`
+
+export const ForgotPasswordLabel = styled.Text`
+  font-size: ${RFValue(14)}px;
 
   ${({ theme }) => css`
     color: ${theme.COLORS.TITLE};

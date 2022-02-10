@@ -2,12 +2,13 @@ import React, { useState } from "react"
 
 import {
   Form,
-  Photo,
-  Subtitle,
+  Brand,
+  ForgotPasswordButton,
   Title,
-  PhotoWrapper,
+  BrandWrapper,
   Container,
   Content,
+  ForgotPasswordLabel,
 } from "./styles"
 
 import BrandImage from "@assets/brand.png"
@@ -32,10 +33,11 @@ export const SignIn = () => {
           enabled
           style={{ flex: 1 }}
         >
-          <PhotoWrapper>
-            <Photo resizeMode="contain" source={BrandImage} />
-          </PhotoWrapper>
           <Content>
+            <BrandWrapper>
+              <Brand source={BrandImage} />
+            </BrandWrapper>
+
             <Form>
               <Title>Login</Title>
               <Input
@@ -50,7 +52,9 @@ export const SignIn = () => {
                 onChangeText={setPassword}
               />
 
-              <Subtitle>Esqueci minha senha</Subtitle>
+              <ForgotPasswordButton>
+                <ForgotPasswordLabel>Esqueci minha senha</ForgotPasswordLabel>
+              </ForgotPasswordButton>
             </Form>
             <Button title="Entrar" />
           </Content>
