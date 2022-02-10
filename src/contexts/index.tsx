@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react"
-import { ToastProvider } from "react-native-styled-toast"
 
 import theme from "../theme"
 import { ThemeProvider } from "styled-components/native"
@@ -12,9 +11,7 @@ type Props = {
 const AppProvider = ({ children }: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <ToastProvider>
-        <AuthProvider>{children}</AuthProvider>
-      </ToastProvider>
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   )
 }

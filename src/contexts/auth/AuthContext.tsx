@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         email: user.email,
       })
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err.code)
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useToast } from "react-native-styled-toast"
+import Toast from "react-native-toast-message"
 
 import {
   Form,
@@ -30,7 +30,6 @@ export const SignIn = () => {
   const [loading, setLoading] = useState(false)
 
   const { signIn } = useAuth()
-  const { toast } = useToast()
 
   const handleSignIn = async () => {
     try {
@@ -38,7 +37,34 @@ export const SignIn = () => {
       setLoading(true)
       await signIn({ email, password })
     } catch (err) {
-      console.log(err)
+      console.log(err.message)
+      if (
+        err.message === "auth/invalid-email" ||
+        err.message === "auth/wrong-password"
+      ) {
+        Toast.show({
+          type: "error",
+          text1: "Email ou senha inválidos!",
+          text2: "Por favor, verifique as credenciais e tente novamente.",
+        })
+        console.log("Email inválido")
+      }
+
+      if (err.message === "auth/user-not-found") {
+        Toast.show({
+          type: "error",
+          text1: "Usuário não encontrado!",
+          text2: "Nenhum usuário corresponde ao email informado.",
+        })
+
+        if (err.message === "auth/user-disabled") {
+          Toast.show({
+            type: "error",
+            text1: "Usuário desativado",
+            text2: "A conta referente a email informado foi desativado.",
+          })
+        }
+      }
     } finally {
       setLoading(false)
     }
@@ -77,6 +103,7 @@ export const SignIn = () => {
             </Form>
             <Button title="Entrar" onPress={handleSignIn} isLoading={loading} />
           </Content>
+          <Toast />
         </KeyboardAvoidingView>
       </Container>
     </TouchableWithoutFeedback>
