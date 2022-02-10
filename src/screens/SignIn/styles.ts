@@ -11,12 +11,8 @@ export const Container = styled(LinearGradient).attrs(({ theme }) => ({
 }))`
   height: 100%;
   justify-content: center;
+  padding: 0 32px;
 `
-
-export const Content = styled.View`
-  padding: 0px 32px;
-`
-
 export const PhotoWrapper = styled.View`
   height: ${RFPercentage(50)}px;
   padding-top: ${getStatusBarHeight() + 50}px;
