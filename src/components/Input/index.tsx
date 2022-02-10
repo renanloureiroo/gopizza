@@ -9,9 +9,14 @@ import { RFPercentage } from "react-native-responsive-fontsize"
 
 interface Props extends TextInputProps {
   type?: "email" | "password"
+  themeInput?: "dark" | "light"
 }
 
-export const Input = ({ type = "email", ...rest }: Props) => {
+export const Input = ({
+  type = "email",
+  themeInput = "dark",
+  ...rest
+}: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = () => setIsVisible(!isVisible)
@@ -21,17 +26,15 @@ export const Input = ({ type = "email", ...rest }: Props) => {
     <Container>
       <InputText
         {...rest}
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholderTextColor={theme.COLORS.TITLE}
         secureTextEntry={!isVisible}
+        themeInput={themeInput}
       />
       {type === "password" && (
         <VisibilityButton onPress={toggleVisibility}>
           <Icon
             name={!!isVisible ? "visibility" : "visibility-off"}
             size={RFPercentage(3.5)}
-            color={theme.COLORS.TITLE}
+            color={theme.COLORS.PRIMARY_50}
           />
         </VisibilityButton>
       )}
