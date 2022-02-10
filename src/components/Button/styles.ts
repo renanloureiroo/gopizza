@@ -32,7 +32,8 @@ export const Title = styled.Text`
 `
 
 export const Loading = styled(Circle).attrs(({ theme }) => ({
-  size: RFValue(14),
+  size: RFPercentage(4),
+
   color: theme.COLORS.TITLE,
   indeterminate: true,
 }))``
