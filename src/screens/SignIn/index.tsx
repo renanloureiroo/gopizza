@@ -1,13 +1,21 @@
 import React, { useState } from "react"
 
-import { Form, Photo, Subtitle, Title, PhotoWrapper, Container } from "./styles"
-import { useTheme } from "styled-components/native"
+import {
+  Form,
+  Photo,
+  Subtitle,
+  Title,
+  PhotoWrapper,
+  Container,
+  Content,
+} from "./styles"
 
-import SignInPhoto from "@assets/images/sign-in-image.png"
+import BrandImage from "@assets/brand.png"
 import { Input } from "@components/Input"
 import {
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   TouchableWithoutFeedback,
 } from "react-native"
 import { Button } from "@components/Button"
@@ -18,27 +26,36 @@ export const SignIn = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView behavior="position" enabled style={{ flex: 1 }}>
-        <Container>
+      <Container>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          enabled
+          style={{ flex: 1 }}
+        >
           <PhotoWrapper>
-            <Photo resizeMode="contain" source={SignInPhoto} />
+            <Photo resizeMode="contain" source={BrandImage} />
           </PhotoWrapper>
+          <Content>
+            <Form>
+              <Title>Login</Title>
+              <Input
+                placeholder="E-mail"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <Input
+                placeholder="Senha"
+                type="password"
+                value={password}
+                onChangeText={setPassword}
+              />
 
-          <Form>
-            <Title>Login</Title>
-            <Input placeholder="E-mail" value={email} onChangeText={setEmail} />
-            <Input
-              placeholder="Senha"
-              type="password"
-              value={password}
-              onChangeText={setPassword}
-            />
-
-            <Subtitle>Esqueci minha senha</Subtitle>
-          </Form>
-          <Button title="Entrar" />
-        </Container>
-      </KeyboardAvoidingView>
+              <Subtitle>Esqueci minha senha</Subtitle>
+            </Form>
+            <Button title="Entrar" />
+          </Content>
+        </KeyboardAvoidingView>
+      </Container>
     </TouchableWithoutFeedback>
   )
 }

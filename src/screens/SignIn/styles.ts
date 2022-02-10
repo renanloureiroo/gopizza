@@ -1,18 +1,31 @@
 import { LinearGradient } from "expo-linear-gradient"
-import { getStatusBarHeight } from "react-native-iphone-x-helper"
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-x-helper"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 
-import styled from "styled-components/native"
+import styled, { css } from "styled-components/native"
 
 export const Container = styled(LinearGradient).attrs(({ theme }) => ({
   colors: theme.COLORS.GRADIENT,
   start: { x: 0, y: 1 },
   end: { x: 0.5, y: 0.5 },
 }))`
-  height: 100%;
+  flex: 1;
   justify-content: center;
-  padding: 0 32px;
 `
+
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  ContentContainerStyle: {
+    paddingBottom: getBottomSpace() + RFPercentage(3),
+  },
+})`
+  width: 100%;
+  padding: 0px 32px;
+`
+
 export const PhotoWrapper = styled.View`
   height: ${RFPercentage(50)}px;
   padding-top: ${getStatusBarHeight() + 50}px;
@@ -29,15 +42,20 @@ export const Form = styled.View`
 `
 
 export const Title = styled.Text`
-  color: ${({ theme }) => theme.COLORS.TITLE};
-  font-family: ${({ theme }) => theme.FONTS.TITLE};
   font-size: ${RFPercentage(5)}px;
+  margin-bottom: ${RFValue(24)}px;
 
-  margin-bottom: ${RFValue(23)}px;
+  ${({ theme }) => css`
+    color: ${theme.COLORS.TITLE};
+    font-family: ${theme.FONTS.TITLE};
+  `}
 `
 export const Subtitle = styled.Text`
-  color: ${({ theme }) => theme.COLORS.TITLE};
-  font-family: ${({ theme }) => theme.FONTS.TEXT};
   font-size: ${RFValue(12)}px;
   align-self: flex-end;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.TITLE};
+    font-family: ${theme.FONTS.TITLE};
+  `}
 `
