@@ -3,7 +3,7 @@ import { RectButtonProps } from "react-native-gesture-handler"
 
 import { Container, Title, Loading } from "./styles"
 
-interface Props extends RectButtonProps {
+type Props = RectButtonProps & {
   type?: "primary" | "secondary"
   title: string
   loading?: boolean
@@ -16,8 +16,8 @@ export const Button = ({
   ...rest
 }: Props) => {
   return (
-    <Container {...rest} type={type}>
-      {!!loading ? <Loading /> : <Title>{title}</Title>}
+    <Container {...rest} type={type} enabled={!loading}>
+      {loading ? <Loading /> : <Title>{title}</Title>}
     </Container>
   )
 }
