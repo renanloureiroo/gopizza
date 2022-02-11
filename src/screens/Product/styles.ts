@@ -13,7 +13,7 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
   colors: theme.COLORS.GRADIENT,
 }))`
   width: 100%;
-  height: ${RFPercentage(30)}px;
+  height: ${RFPercentage(25)}px;
   max-height: ${RFValue(204)}px;
 
   align-items: center;
@@ -42,7 +42,7 @@ export const ProductImage = styled.Image.attrs({ resizeMode: "contain" })`
 
 export const Content = styled.View`
   align-items: center;
-  margin-top: ${RFPercentage(17) + 24}px;
+  margin-top: ${RFPercentage(17)}px;
 
   padding: 0 24px;
 `
@@ -60,6 +60,8 @@ export const WrapperSelect = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: ${RFPercentage(5)}px;
 `
 
 export const SelectedTitle = styled.Text`
@@ -71,4 +73,11 @@ export const SelectedTitle = styled.Text`
 
     margin-bottom: 16px;
   `}
+`
+
+export const InputsWrapper = styled.View`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `

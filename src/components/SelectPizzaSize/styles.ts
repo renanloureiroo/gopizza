@@ -25,7 +25,7 @@ export const Content = styled.View<Props>`
   justify-content: space-between;
 
   background: ${({ theme, selected }) =>
-    selected ? theme.COLORS.SUCCESS_50 : "transparent"};
+    selected ? theme.COLORS.SUCCESS_50 : theme.COLORS.TITLE};
 `
 export const Title = styled.Text`
   ${({ theme }) => css`

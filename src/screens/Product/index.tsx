@@ -12,10 +12,12 @@ import {
   WrapperProductImage,
   WrapperSelect,
   SelectedTitle,
+  InputsWrapper,
 } from "./styles"
 
 import PizzaImage from "@assets/pizza.png"
 import { SelectPizzaSize } from "@components/SelectPizzaSize"
+import { InputNumber } from "@components/InputNumber"
 
 export const Product = () => {
   const [size, setSize] = useState<"small" | "medium" | "large" | null>(null)
@@ -56,6 +58,11 @@ export const Product = () => {
             selected={size === "large"}
           />
         </WrapperSelect>
+
+        <InputsWrapper>
+          <InputNumber title="Número da mesa" />
+          <InputNumber title="Quantidade" />
+        </InputsWrapper>
       </Content>
     </Container>
   )
