@@ -2,7 +2,10 @@ import styled, { css } from "styled-components/native"
 
 import { LinearGradient } from "expo-linear-gradient"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
-import { getStatusBarHeight } from "react-native-iphone-x-helper"
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-x-helper"
 
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
@@ -40,11 +43,18 @@ export const ProductImage = styled.Image.attrs({ resizeMode: "contain" })`
   height: 100%;
 `
 
+export const ContentWrapper = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingHorizontal: 24,
+    paddingBottom: getBottomSpace(),
+  },
+})``
+
 export const Content = styled.View`
   align-items: center;
+  width: 100%;
   margin-top: ${RFPercentage(17)}px;
-
-  padding: 0 24px;
 `
 
 export const Title = styled.Text`
@@ -80,4 +90,15 @@ export const InputsWrapper = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: ${RFPercentage(3)}px;
+`
+
+export const Total = styled.Text`
+  ${({ theme }) => css`
+    align-self: flex-end;
+    font-family: ${theme.FONTS.TEXT};
+    font-size: ${RFValue(14)}px;
+    color: ${theme.COLORS.SECONDARY_900};
+  `}
 `

@@ -13,6 +13,7 @@ export const Container = styled(RectButton)<Props>`
     type === "primary" ? theme.COLORS.PRIMARY_800 : theme.COLORS.SUCCESS_900};
 
   flex: 1;
+  width: 100%;
   max-height: ${RFPercentage(8)}px;
   min-height: ${RFPercentage(8)}px;
   border-radius: ${RFValue(12)}px;
