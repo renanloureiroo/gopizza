@@ -7,6 +7,7 @@ interface AuthContextData {
   user: User | null
   signIn: ({}: SignInProps) => Promise<void>
   signOut: () => Promise<void>
+  forgetPassword: (email: string) => Promise<void>
 }
 
 interface AuthContextProps {
@@ -71,6 +72,14 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }
   }
 
+  async function forgetPassword(email: string) {
+    try {
+      auth().sendPasswordResetEmail(email)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
   useEffect(() => {
     setIsStarted(true)
     const rehydrated = async () => {
@@ -91,7 +100,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, forgetPassword, user }}>
       {children}
     </AuthContext.Provider>
   )

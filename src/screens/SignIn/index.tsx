@@ -29,7 +29,7 @@ export const SignIn = () => {
 
   const [loading, setLoading] = useState(false)
 
-  const { signIn } = useAuth()
+  const { signIn, forgetPassword } = useAuth()
 
   const handleSignIn = async () => {
     setLoading(true)
@@ -73,6 +73,15 @@ export const SignIn = () => {
     }
   }
 
+  const handleForgetPassword = async () => {
+    try {
+      if (!email) throw new Error("Missing email!")
+      await forgetPassword(email)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -100,7 +109,7 @@ export const SignIn = () => {
                 onChangeText={setPassword}
               />
 
-              <ForgotPasswordButton>
+              <ForgotPasswordButton onPress={handleForgetPassword}>
                 <ForgotPasswordLabel>Esqueci minha senha</ForgotPasswordLabel>
               </ForgotPasswordButton>
             </Form>
