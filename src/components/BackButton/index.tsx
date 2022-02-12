@@ -1,19 +1,18 @@
 import React from "react"
-import { RectButtonProps } from "react-native-gesture-handler"
+
 import Icon from "@expo/vector-icons/Entypo"
 
-import { Container, Wrapper } from "./styles"
+import { Container } from "./styles"
 import { useTheme } from "styled-components/native"
+import { TouchableOpacityProps } from "react-native"
 
-type BackButtonProps = RectButtonProps & {}
+type BackButtonProps = TouchableOpacityProps & {}
 
 export const BackButton = ({ ...rest }: BackButtonProps) => {
   const theme = useTheme()
   return (
     <Container {...rest}>
-      <Wrapper>
-        <Icon name="chevron-small-left" size={32} color={theme.COLORS.TITLE} />
-      </Wrapper>
+      <Icon name="chevron-small-left" size={32} color={theme.COLORS.TITLE} />
     </Container>
   )
 }
