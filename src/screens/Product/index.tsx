@@ -1,4 +1,5 @@
 import { BackButton } from "@components/BackButton"
+import { Photo } from "@components/Photo"
 import React from "react"
 import { Keyboard, Platform, TouchableOpacity } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -16,6 +17,8 @@ export const Product = () => {
           <DeleteLabel>Deletar</DeleteLabel>
         </TouchableOpacity>
       </Header>
+
+      <Photo uri="https://github.com/renanloureiroo.png" />
     </Container>
     // </TouchableWithoutFeedback>
   )
