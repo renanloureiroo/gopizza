@@ -1,3 +1,4 @@
+import { Button } from "@components/Button"
 import { LinearGradient } from "expo-linear-gradient"
 import { getStatusBarHeight } from "react-native-iphone-x-helper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -31,4 +32,18 @@ export const DeleteLabel = styled.Text`
     font-family: ${theme.FONTS.TEXT};
     font-size: ${RFValue(14)}px;
   `}
+`
+
+export const Upload = styled.View`
+  width: 100%;
+  flex-direction: row;
+  padding: 0 46px;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 32px 0;
+`
+
+export const PickImageButton = styled(Button)`
+  margin-left: 32px;
 `

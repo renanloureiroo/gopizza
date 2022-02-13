@@ -4,7 +4,14 @@ import React from "react"
 import { Keyboard, Platform, TouchableOpacity } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
-import { Container, Header, Title, DeleteLabel } from "./styles"
+import {
+  Container,
+  Header,
+  Title,
+  DeleteLabel,
+  Upload,
+  PickImageButton,
+} from "./styles"
 
 export const Product = () => {
   return (
@@ -18,7 +25,10 @@ export const Product = () => {
         </TouchableOpacity>
       </Header>
 
-      <Photo uri="https://github.com/renanloureiroo.png" />
+      <Upload>
+        <Photo uri="" />
+        <PickImageButton title="Carregar" />
+      </Upload>
     </Container>
     // </TouchableWithoutFeedback>
   )
