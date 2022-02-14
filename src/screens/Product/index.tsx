@@ -33,6 +33,12 @@ import { Button } from "@components/Button"
 export const Product = () => {
   const [image, setImage] = useState("")
 
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [smallPrice, setSmallPrice] = useState(0)
+  const [mediumPrice, setMediumPrice] = useState(0)
+  const [largePrice, setLargePrice] = useState(0)
+
   async function handlePickerImage() {
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -75,21 +81,39 @@ export const Product = () => {
           <Form>
             <InputGroup>
               <Label>Nome</Label>
-              <Input />
+              <Input value={name} onChangeText={setName} />
             </InputGroup>
             <InputGroup>
               <InputGroupHeader>
                 <Label>Descrição</Label>
                 <MaxCharacters>Max 60 caracteres</MaxCharacters>
               </InputGroupHeader>
-              <Input multiline maxLength={60} style={{ height: RFValue(80) }} />
+              <Input
+                value={description}
+                onChangeText={setDescription}
+                multiline
+                maxLength={60}
+                style={{ height: RFValue(80) }}
+              />
             </InputGroup>
 
             <InputGroup>
               <Label>Tamanhos de preços</Label>
-              <InputPrice size="P" />
-              <InputPrice size="M" />
-              <InputPrice size="G" />
+              <InputPrice
+                value={String(smallPrice)}
+                onChangeText={(value) => setSmallPrice(Number(value))}
+                size="P"
+              />
+              <InputPrice
+                value={String(mediumPrice)}
+                onChangeText={(value) => setMediumPrice(Number(value))}
+                size="M"
+              />
+              <InputPrice
+                value={String(largePrice)}
+                onChangeText={(value) => setLargePrice(Number(value))}
+                size="G"
+              />
             </InputGroup>
 
             <Button title="Cadastrar pizza" type="secondary" />
