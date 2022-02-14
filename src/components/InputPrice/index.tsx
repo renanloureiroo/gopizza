@@ -8,8 +8,10 @@ type Props = TextInputProps & {
   size: string
 }
 
-export const InputPrice = ({ size, ...rest }: Props) => {
+export const InputPrice = React.forwardRef<TextInput, Props>((props, ref) => {
+  const { size, ...rest } = props
   const theme = useTheme()
+
   return (
     <Container>
       <Size>
@@ -23,4 +25,4 @@ export const InputPrice = ({ size, ...rest }: Props) => {
       />
     </Container>
   )
-}
+})

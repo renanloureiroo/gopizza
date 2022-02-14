@@ -39,7 +39,8 @@ export const Product = () => {
   const [mediumPrice, setMediumPrice] = useState(0)
   const [largePrice, setLargePrice] = useState(0)
 
-  const input = useRef<TextInput>(null)
+  const inputDescription = useRef<TextInput>(null)
+  const inputSmall = useRef<TextInput>(null)
 
   async function handlePickerImage() {
     try {
@@ -84,7 +85,7 @@ export const Product = () => {
             <InputGroup>
               <Label>Nome</Label>
               <Input
-                onSubmitEditing={() => input.current.focus()}
+                onSubmitEditing={() => inputDescription.current.focus()}
                 value={name}
                 onChangeText={setName}
               />
@@ -95,7 +96,7 @@ export const Product = () => {
                 <MaxCharacters>Max 60 caracteres</MaxCharacters>
               </InputGroupHeader>
               <Input
-                ref={input}
+                ref={inputDescription}
                 value={description}
                 onChangeText={setDescription}
                 multiline
