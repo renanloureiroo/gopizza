@@ -14,6 +14,7 @@ import {
   Upload,
   PickImageButton,
 } from "./styles"
+import { InputPrice } from "@components/InputPrice"
 
 export const Product = () => {
   const [image, setImage] = useState("")
@@ -25,6 +26,7 @@ export const Product = () => {
       if (status === "granted") {
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
           aspect: [4, 4],
         })
 
@@ -49,9 +51,13 @@ export const Product = () => {
       </Header>
 
       <Upload>
-        <Photo uri="" />
+        <Photo uri={image} />
         <PickImageButton title="Carregar" onPress={handlePickerImage} />
       </Upload>
+
+      <InputPrice size="P" />
+      <InputPrice size="M" />
+      <InputPrice size="G" />
     </Container>
     // </TouchableWithoutFeedback>
   )

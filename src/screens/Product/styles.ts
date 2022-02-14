@@ -37,8 +37,8 @@ export const DeleteLabel = styled.Text`
 export const Upload = styled.View`
   width: 100%;
   flex-direction: row;
-  padding: 0 46px;
-  justify-content: space-between;
+  padding: 0 42px;
+  justify-content: center;
   align-items: center;
 
   margin: 32px 0;
