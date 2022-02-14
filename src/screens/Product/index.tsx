@@ -29,18 +29,26 @@ import { InputPrice } from "@components/InputPrice"
 import { Input } from "@components/Input"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Button } from "@components/Button"
+import { useTheme } from "styled-components/native"
 
 export const Product = () => {
   const [image, setImage] = useState("")
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [smallPrice, setSmallPrice] = useState(0)
-  const [mediumPrice, setMediumPrice] = useState(0)
-  const [largePrice, setLargePrice] = useState(0)
+  const [smallPrice, setSmallPrice] = useState("")
+  const [mediumPrice, setMediumPrice] = useState("")
+  const [largePrice, setLargePrice] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const inputDescription = useRef<TextInput>(null)
   const inputSmall = useRef<TextInput>(null)
+  const inputMedium = useRef<TextInput>(null)
+  const inputLarge = useRef<TextInput>(null)
+
+  const theme = useTheme()
+
+  async function handleAdd() {}
 
   async function handlePickerImage() {
     try {
@@ -85,9 +93,11 @@ export const Product = () => {
             <InputGroup>
               <Label>Nome</Label>
               <Input
+                style={{ color: theme.COLORS.SECONDARY_900 }}
                 onSubmitEditing={() => inputDescription.current.focus()}
                 value={name}
                 onChangeText={setName}
+                blurOnSubmit={false}
               />
             </InputGroup>
             <InputGroup>
@@ -97,34 +107,51 @@ export const Product = () => {
               </InputGroupHeader>
               <Input
                 ref={inputDescription}
+                blurOnSubmit={false}
                 value={description}
                 onChangeText={setDescription}
+                onSubmitEditing={() => inputSmall.current.focus()}
                 multiline
                 maxLength={60}
-                style={{ height: RFValue(80) }}
+                style={{
+                  height: RFValue(80),
+                  color: theme.COLORS.SECONDARY_900,
+                }}
               />
             </InputGroup>
 
             <InputGroup>
               <Label>Tamanhos de preços</Label>
               <InputPrice
-                value={String(smallPrice)}
-                onChangeText={(value) => setSmallPrice(Number(value))}
+                ref={inputSmall}
+                onSubmitEditing={() => inputMedium.current.focus()}
+                blurOnSubmit={false}
+                value={smallPrice}
+                onChangeText={setSmallPrice}
                 size="P"
               />
               <InputPrice
-                value={String(mediumPrice)}
-                onChangeText={(value) => setMediumPrice(Number(value))}
+                ref={inputMedium}
+                onSubmitEditing={() => inputLarge.current.focus()}
+                blurOnSubmit={false}
+                value={mediumPrice}
+                onChangeText={setMediumPrice}
                 size="M"
               />
               <InputPrice
-                value={String(largePrice)}
-                onChangeText={(value) => setLargePrice(Number(value))}
+                ref={inputLarge}
+                value={largePrice}
+                onChangeText={setLargePrice}
                 size="G"
               />
             </InputGroup>
 
-            <Button title="Cadastrar pizza" type="secondary" />
+            <Button
+              title="Cadastrar pizza"
+              type="secondary"
+              isLoading={isLoading}
+              onPress={handleAdd}
+            />
           </Form>
         </ScrollView>
       </Container>

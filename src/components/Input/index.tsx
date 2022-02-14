@@ -15,7 +15,7 @@ interface Props extends TextInputProps {
 export const Input = React.forwardRef<TextInput, Props>((props, ref) => {
   const [isVisible, setIsVisible] = useState(false)
 
-  const { type, themeInput, ...rest } = props
+  const { type = "email", themeInput, ...rest } = props
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
