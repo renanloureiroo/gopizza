@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { TextInputProps } from "react-native"
+import React, { useState, Ref } from "react"
+import { TextInput, TextInputProps } from "react-native"
 import { useTheme } from "styled-components/native"
 
 import Icon from "@expo/vector-icons/MaterialIcons"
@@ -15,6 +15,7 @@ interface Props extends TextInputProps {
 export const Input = ({
   type = "email",
   themeInput = "dark",
+
   ...rest
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false)

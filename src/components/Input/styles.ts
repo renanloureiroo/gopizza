@@ -8,14 +8,13 @@ type InputProps = {
 
 export const Container = styled.View`
   width: 100%;
-  height: ${RFPercentage(8)}px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 0 20px;
 
   border-width: 1px;
-  border-color: ${({ theme }) => theme.COLORS.PRIMARY_100};
+  border-color: ${({ theme }) => theme.COLORS.SHAPE};
   border-radius: ${RFValue(12)}px;
 
   margin-bottom: ${RFValue(16)}px;
@@ -36,12 +35,13 @@ export const InputText = styled(TextInput).attrs<InputProps>(
   color: ${({ theme }) => theme.COLORS.TITLE};
   font-family: ${({ theme }) => theme.FONTS.TEXT};
   font-size: ${RFValue(14)}px;
+  height: ${RFValue(56)}px;
 
   background: transparent;
 `
 
 export const VisibilityButton = styled.TouchableOpacity`
-  height: 100%;
+  height: ${RFValue(56)}px;
   justify-content: center;
   align-items: center;
 `

@@ -1,4 +1,5 @@
 import { Button } from "@components/Button"
+import { Input } from "@components/Input"
 import { LinearGradient } from "expo-linear-gradient"
 import { getStatusBarHeight } from "react-native-iphone-x-helper"
 import { RFValue } from "react-native-responsive-fontsize"
@@ -46,4 +47,39 @@ export const Upload = styled.View`
 
 export const PickImageButton = styled(Button)`
   margin-left: 10px;
+`
+
+export const Form = styled.View`
+  width: 100%;
+  padding: 0 24px;
+`
+
+export const Label = styled.Text`
+  font-size: ${RFValue(14)}px;
+  margin-bottom: ${RFValue(11)}px;
+  ${({ theme }) => css`
+    font-family: ${theme.FONTS.TEXT};
+    color: ${theme.COLORS.SECONDARY_900};
+  `}
+`
+
+export const InputGroup = styled.View`
+  width: 100%;
+  margin-bottom: ${RFValue(17)}px;
+`
+
+export const InputGroupHeader = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const MaxCharacters = styled.Text`
+  font-size: ${RFValue(10)}px;
+  margin-bottom: ${RFValue(12)}px;
+  ${({ theme }) => css`
+    font-family: ${theme.FONTS.TEXT};
+    color: ${theme.COLORS.SECONDARY_900};
+  `}
 `
