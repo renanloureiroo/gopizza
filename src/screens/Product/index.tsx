@@ -39,6 +39,8 @@ export const Product = () => {
   const [mediumPrice, setMediumPrice] = useState(0)
   const [largePrice, setLargePrice] = useState(0)
 
+  const input = useRef<TextInput>(null)
+
   async function handlePickerImage() {
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -81,7 +83,11 @@ export const Product = () => {
           <Form>
             <InputGroup>
               <Label>Nome</Label>
-              <Input value={name} onChangeText={setName} />
+              <Input
+                onSubmitEditing={() => input.current.focus()}
+                value={name}
+                onChangeText={setName}
+              />
             </InputGroup>
             <InputGroup>
               <InputGroupHeader>
@@ -89,6 +95,7 @@ export const Product = () => {
                 <MaxCharacters>Max 60 caracteres</MaxCharacters>
               </InputGroupHeader>
               <Input
+                ref={input}
                 value={description}
                 onChangeText={setDescription}
                 multiline

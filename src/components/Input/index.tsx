@@ -12,13 +12,10 @@ interface Props extends TextInputProps {
   themeInput?: "dark" | "light"
 }
 
-export const Input = ({
-  type = "email",
-  themeInput = "dark",
-
-  ...rest
-}: Props) => {
+export const Input = React.forwardRef<TextInput, Props>((props, ref) => {
   const [isVisible, setIsVisible] = useState(false)
+
+  const { type, themeInput, ...rest } = props
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
@@ -27,6 +24,7 @@ export const Input = ({
     <Container>
       <InputText
         {...rest}
+        ref={ref}
         secureTextEntry={type !== "email" || isVisible}
         themeInput={themeInput}
       />
@@ -41,4 +39,4 @@ export const Input = ({
       )}
     </Container>
   )
-}
+})
