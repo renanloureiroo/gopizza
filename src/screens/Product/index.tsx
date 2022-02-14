@@ -12,6 +12,9 @@ import { TouchableWithoutFeedback } from "react-native"
 
 import * as ImagePicker from "expo-image-picker"
 
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
 import {
   Container,
   Header,
@@ -30,6 +33,17 @@ import { Input } from "@components/Input"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Button } from "@components/Button"
 import { useTheme } from "styled-components/native"
+import { useForm } from "react-hook-form"
+
+interface FormData {
+  name: string
+  description: string
+}
+
+const schema = yup.object().shape({
+  name: yup.string().required("Nome é obrigatório."),
+  description: yup.string().required("Descrição é obrigatória."),
+})
 
 export const Product = () => {
   const [image, setImage] = useState("")
@@ -47,8 +61,17 @@ export const Product = () => {
   const inputLarge = useRef<TextInput>(null)
 
   const theme = useTheme()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
-  async function handleAdd() {}
+  async function handleAdd(formData: FormData) {
+    console.log(formData)
+  }
 
   async function handlePickerImage() {
     try {
@@ -93,10 +116,11 @@ export const Product = () => {
             <InputGroup>
               <Label>Nome</Label>
               <Input
+                error={errors.name && errors.name.message}
+                name="name"
+                control={control}
                 style={{ color: theme.COLORS.SECONDARY_900 }}
                 onSubmitEditing={() => inputDescription.current.focus()}
-                value={name}
-                onChangeText={setName}
                 blurOnSubmit={false}
               />
             </InputGroup>
@@ -106,10 +130,11 @@ export const Product = () => {
                 <MaxCharacters>Max 60 caracteres</MaxCharacters>
               </InputGroupHeader>
               <Input
+                error={errors.description && errors.description.message}
+                name="description"
+                control={control}
                 ref={inputDescription}
                 blurOnSubmit={false}
-                value={description}
-                onChangeText={setDescription}
                 onSubmitEditing={() => inputSmall.current.focus()}
                 multiline
                 maxLength={60}
@@ -150,7 +175,7 @@ export const Product = () => {
               title="Cadastrar pizza"
               type="secondary"
               isLoading={isLoading}
-              onPress={handleAdd}
+              onPress={handleSubmit(handleAdd)}
             />
           </Form>
         </ScrollView>

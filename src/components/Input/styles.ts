@@ -1,6 +1,6 @@
 import { TextInput } from "react-native"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
-import styled from "styled-components/native"
+import styled, { css } from "styled-components/native"
 
 type InputProps = {
   themeInput: "dark" | "light"
@@ -12,12 +12,11 @@ export const Container = styled.View`
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-
   border-width: 1px;
   border-color: ${({ theme }) => theme.COLORS.SHAPE};
   border-radius: ${RFValue(12)}px;
 
-  margin-bottom: ${RFValue(16)}px;
+  margin-bottom: ${RFValue(5)}px;
 `
 export const InputText = styled(TextInput).attrs<InputProps>(
   ({ theme, themeInput }) => {
@@ -44,4 +43,13 @@ export const VisibilityButton = styled.TouchableOpacity`
   height: ${RFValue(56)}px;
   justify-content: center;
   align-items: center;
+`
+export const Error = styled.Text`
+  font-size: ${RFValue(12)}px;
+  margin-left: ${RFValue(10)}px;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.PRIMARY_100};
+    font-family: ${theme.FONTS.TEXT};
+  `}
 `
