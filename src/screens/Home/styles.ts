@@ -47,3 +47,10 @@ export const SearchWrapper = styled.View`
 
   bottom: -${RFValue(24)}px;
 `
+
+export const Content = styled.View`
+  flex: 1;
+  margin-top: ${RFValue(47)}px;
+  border-top-width: 1px;
+  border-top-color: ${({ theme }) => theme.COLORS.SHAPE};
+`

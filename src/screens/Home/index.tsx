@@ -2,6 +2,7 @@ import React from "react"
 
 import {
   Container,
+  Content,
   Emoticon,
   Header,
   LogOut,
@@ -15,6 +16,7 @@ import EmoticonImage from "@assets/happy.png"
 import Icon from "@expo/vector-icons/Feather"
 import { useTheme } from "styled-components/native"
 import { InputSearch } from "@components/InputSearch"
+import { Card } from "@components/Card"
 
 export const Home = () => {
   const theme = useTheme()
@@ -33,6 +35,12 @@ export const Home = () => {
           <InputSearch />
         </SearchWrapper>
       </Header>
+      <Content>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </Content>
     </Container>
   )
 }
