@@ -1,6 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient"
 import { BorderlessButton } from "react-native-gesture-handler"
-import { getStatusBarHeight } from "react-native-iphone-x-helper"
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from "react-native-iphone-x-helper"
 import { RFValue } from "react-native-responsive-fontsize"
 import styled, { css } from "styled-components/native"
 
@@ -53,5 +56,18 @@ export const Content = styled.View`
   margin-top: ${RFValue(47)}px;
   border-top-width: 1px;
   border-top-color: ${({ theme }) => theme.COLORS.SHAPE};
+
+  margin-left: 24px;
+  margin-right: 24px;
+  padding-top: ${RFValue(20)}px;
+`
+
+export const Footer = styled.View`
+  width: 100%;
   padding: 0 24px;
+  height: ${RFValue(72) + getBottomSpace()}px;
+  background: ${({ theme }) => theme.COLORS.BACKGROUND};
+
+  align-items: center;
+  justify-content: center;
 `

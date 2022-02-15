@@ -4,6 +4,7 @@ import {
   Container,
   Content,
   Emoticon,
+  Footer,
   Header,
   LogOut,
   SearchWrapper,
@@ -17,6 +18,8 @@ import Icon from "@expo/vector-icons/Feather"
 import { useTheme } from "styled-components/native"
 import { InputSearch } from "@components/InputSearch"
 import { Card } from "@components/Card"
+import { Button } from "@components/Button"
+import { ScrollView } from "react-native"
 
 export const Home = () => {
   const theme = useTheme()
@@ -36,11 +39,21 @@ export const Home = () => {
         </SearchWrapper>
       </Header>
       <Content>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </ScrollView>
       </Content>
+      <Footer>
+        <Button title="Cadastrar pizza" />
+      </Footer>
     </Container>
   )
 }
