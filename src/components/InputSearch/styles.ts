@@ -22,6 +22,7 @@ export const Input = styled.TextInput`
   flex: 1;
   height: 100%;
   font-size: ${RFValue(14)}px;
+  padding: 0 ${RFValue(14)}px;
 
   ${({ theme }) => css`
     color: ${theme.COLORS.SECONDARY_900};
