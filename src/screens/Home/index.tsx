@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import {
   Container,
@@ -22,6 +22,10 @@ import { Button } from "@components/Button"
 import { ScrollView } from "react-native"
 
 export const Home = () => {
+  const [search, setSearch] = useState("")
+  const handleClear = () => {
+    setSearch("")
+  }
   const theme = useTheme()
   return (
     <Container>
@@ -35,7 +39,11 @@ export const Home = () => {
           </LogOut>
         </TitleWrapper>
         <SearchWrapper>
-          <InputSearch />
+          <InputSearch
+            value={search}
+            onChangeText={setSearch}
+            clear={handleClear}
+          />
         </SearchWrapper>
       </Header>
       <Content>

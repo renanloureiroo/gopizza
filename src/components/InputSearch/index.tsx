@@ -14,20 +14,19 @@ import { TextInput, TextInputProps } from "react-native"
 import { useTheme } from "styled-components/native"
 import { RectButtonProps } from "react-native-gesture-handler"
 
-type Props = RectButtonProps & TextInputProps & {}
+type Props = RectButtonProps &
+  TextInputProps & {
+    clear: () => void
+  }
 
-export const InputSearch = ({ value, onChangeText, onPress }: Props) => {
-  const input = useRef<TextInput>(null)
+export const InputSearch = ({ value, onChangeText, clear, onPress }: Props) => {
   const theme = useTheme()
 
-  const handleClearInput = () => {
-    input.current.clear
-  }
   return (
     <Container>
       <InputWrapper>
-        <Input value={value} onChangeText={onChangeText} ref={input} />
-        <ClearButton onPress={handleClearInput}>
+        <Input value={value} onChangeText={onChangeText} />
+        <ClearButton onPress={clear}>
           <Icon name="close" size={16} />
         </ClearButton>
       </InputWrapper>
