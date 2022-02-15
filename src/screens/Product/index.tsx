@@ -8,12 +8,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native"
-import { TouchableWithoutFeedback } from "react-native"
-
+import { TouchableWithoutFeedback, Alert } from "react-native"
 import * as ImagePicker from "expo-image-picker"
-
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+
+import firestore from "@react-native-firebase/firestore"
+import storage from "@react-native-firebase/storage"
 
 import {
   Container,
@@ -38,19 +39,31 @@ import { FieldValues, useForm } from "react-hook-form"
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório!"),
   description: yup.string().required("Descrição é obrigatória!"),
-  smallPrice: yup.string().required("Preço é obrigatório!"),
-  mediumPrice: yup.string().required("Preço é obrigatório!"),
-  largePrice: yup.string().required("Preço é obrigatório!"),
+  smallPrice: yup
+    .number()
+    .positive("Não pode ser um valor negativo!")
+    .required("Preço é obrigatório!"),
+  mediumPrice: yup
+    .number()
+    .positive("Não pode ser um valor negativo!")
+    .required("Preço é obrigatório!"),
+  largePrice: yup
+    .number()
+    .positive("Não pode ser um valor negativo!")
+    .required("Preço é obrigatório!"),
 })
+
+type FormData = {
+  name: string
+  description: string
+  smallPrice: number
+  mediumPrice: number
+  largePrice: number
+}
 
 export const Product = () => {
   const [image, setImage] = useState("")
 
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [smallPrice, setSmallPrice] = useState("")
-  const [mediumPrice, setMediumPrice] = useState("")
-  const [largePrice, setLargePrice] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const inputDescription = useRef<TextInput>(null)
@@ -62,17 +75,44 @@ export const Product = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   })
 
-  const handleAdd = async (form: FieldValues) => {
+  const handleAdd = async (form: FormData) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
-      console.log(form)
+      if (!image) return
+
+      const fileName = new Date().getTime()
+      const reference = storage().ref(`/pizzas/${fileName}.png`)
+
+      await reference.putFile(image)
+      const photo_url = reference.getDownloadURL()
+
+      const newPizza = {
+        name: form.name,
+        name_insensitive: form.name.toLowerCase().trim(),
+        description: form.description,
+        prices_sizes: {
+          p: form.smallPrice,
+          m: form.mediumPrice,
+          g: form.largePrice,
+          photo_url,
+          photo_path: reference.fullPath,
+        },
+      }
+
+      await firestore().collection("pizzas").add(newPizza)
+
+      Alert.alert("Cadastro", "Pizza cadastrada com sucesso.")
     } catch (err) {
+      Alert.alert("Cadastro", "Não foi possível cadastrar a pizza.")
     } finally {
+      reset()
+      setImage("")
       setIsLoading(false)
     }
   }
@@ -84,7 +124,7 @@ export const Product = () => {
       if (status === "granted") {
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
+
           aspect: [4, 4],
         })
 

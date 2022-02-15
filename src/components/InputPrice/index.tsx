@@ -26,9 +26,11 @@ export const InputPrice = React.forwardRef<TextInput, Props>((props, ref) => {
         <Controller
           name={name}
           control={control}
-          render={() => (
+          render={({ field: { value, onChange } }) => (
             <Input
               {...rest}
+              value={value}
+              onChangeText={onChange}
               ref={ref}
               keyboardType="numeric"
               placeholderTextColor={theme.COLORS.SECONDARY_900}
