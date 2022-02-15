@@ -1,4 +1,5 @@
 import React from "react"
+import { FieldValues, SubmitErrorHandler, SubmitHandler } from "react-hook-form"
 import { RectButtonProps } from "react-native-gesture-handler"
 
 import { Container, Title, Loading } from "./styles"
@@ -12,6 +13,7 @@ type Props = RectButtonProps & {
 export const Button = ({
   type = "primary",
   isLoading = false,
+
   title,
   ...rest
 }: Props) => {

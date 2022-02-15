@@ -41,3 +41,13 @@ export const Input = styled(TextInput)`
     color: ${({ theme }) => theme.COLORS.SECONDARY_900};
   `}
 `
+
+export const Error = styled.Text`
+  font-size: ${RFValue(12)}px;
+  margin-left: ${RFValue(10)}px;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.PRIMARY_100};
+    font-family: ${theme.FONTS.TEXT};
+  `}
+`

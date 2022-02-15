@@ -33,16 +33,14 @@ import { Input } from "@components/Input"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Button } from "@components/Button"
 import { useTheme } from "styled-components/native"
-import { useForm } from "react-hook-form"
-
-interface FormData {
-  name: string
-  description: string
-}
+import { FieldValues, useForm } from "react-hook-form"
 
 const schema = yup.object().shape({
-  name: yup.string().required("Nome é obrigatório."),
-  description: yup.string().required("Descrição é obrigatória."),
+  name: yup.string().required("Nome é obrigatório!"),
+  description: yup.string().required("Descrição é obrigatória!"),
+  smallPrice: yup.string().required("Preço é obrigatório!"),
+  mediumPrice: yup.string().required("Preço é obrigatório!"),
+  largePrice: yup.string().required("Preço é obrigatório!"),
 })
 
 export const Product = () => {
@@ -69,8 +67,14 @@ export const Product = () => {
     resolver: yupResolver(schema),
   })
 
-  async function handleAdd(formData: FormData) {
-    console.log(formData)
+  const handleAdd = async (form: FieldValues) => {
+    try {
+      setIsLoading(true)
+      console.log(form)
+    } catch (err) {
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   async function handlePickerImage() {
@@ -148,25 +152,28 @@ export const Product = () => {
             <InputGroup>
               <Label>Tamanhos de preços</Label>
               <InputPrice
+                error={errors.smallPrice && errors.smallPrice.message}
+                name="smallPrice"
+                control={control}
                 ref={inputSmall}
                 onSubmitEditing={() => inputMedium.current.focus()}
                 blurOnSubmit={false}
-                value={smallPrice}
-                onChangeText={setSmallPrice}
                 size="P"
               />
               <InputPrice
+                error={errors.mediumPrice && errors.mediumPrice.message}
+                name="mediumPrice"
+                control={control}
                 ref={inputMedium}
                 onSubmitEditing={() => inputLarge.current.focus()}
                 blurOnSubmit={false}
-                value={mediumPrice}
-                onChangeText={setMediumPrice}
                 size="M"
               />
               <InputPrice
+                error={errors.largePrice && errors.largePrice.message}
+                name="largePrice"
+                control={control}
                 ref={inputLarge}
-                value={largePrice}
-                onChangeText={setLargePrice}
                 size="G"
               />
             </InputGroup>
@@ -175,7 +182,7 @@ export const Product = () => {
               title="Cadastrar pizza"
               type="secondary"
               isLoading={isLoading}
-              onPress={handleSubmit(handleAdd)}
+              onPress={() => handleSubmit(handleAdd)()}
             />
           </Form>
         </ScrollView>
