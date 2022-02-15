@@ -15,6 +15,7 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
   height: ${RFValue(149)}px;
   padding: 0 24px;
   padding-top: ${getStatusBarHeight() + 30}px;
+  justify-content: flex-end;
 `
 
 export const TitleWrapper = styled.View`
@@ -38,4 +39,11 @@ export const Title = styled.Text`
 `
 export const LogOut = styled(BorderlessButton)`
   margin-left: auto;
+`
+
+export const SearchWrapper = styled.View`
+  width: 100%;
+  min-height: ${RFValue(48)}px;
+
+  bottom: -${RFValue(24)}px;
 `
