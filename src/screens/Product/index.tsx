@@ -90,7 +90,7 @@ export const Product = () => {
       const reference = storage().ref(`/pizzas/${fileName}.png`)
 
       await reference.putFile(image)
-      const photo_url = reference.getDownloadURL()
+      const photo_url = await reference.getDownloadURL()
 
       const newPizza = {
         name: form.name,
