@@ -53,4 +53,5 @@ export const Content = styled.View`
   margin-top: ${RFValue(47)}px;
   border-top-width: 1px;
   border-top-color: ${({ theme }) => theme.COLORS.SHAPE};
+  padding: 0 24px;
 `

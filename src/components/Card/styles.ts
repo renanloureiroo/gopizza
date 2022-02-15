@@ -19,6 +19,7 @@ export const Content = styled.View`
   height: 100%;
   padding: ${RFValue(18)}px 0;
   flex: 1;
+  margin-left: ${RFValue(20)}px;
 
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.COLORS.SHAPE};
