@@ -21,7 +21,7 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
   justify-content: flex-end;
 `
 
-export const TitleWrapper = styled.View`
+export const Greeting = styled.View`
   flex-direction: row;
   align-items: center;
 `
@@ -39,9 +39,6 @@ export const Title = styled.Text`
     color: ${theme.COLORS.TITLE};
     font-family: ${theme.FONTS.TITLE};
   `}
-`
-export const LogOut = styled(BorderlessButton)`
-  margin-left: auto;
 `
 
 export const SearchWrapper = styled.View`

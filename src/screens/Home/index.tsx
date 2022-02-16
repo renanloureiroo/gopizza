@@ -6,20 +6,19 @@ import {
   Emoticon,
   Footer,
   Header,
-  LogOut,
   SearchWrapper,
   Title,
-  TitleWrapper,
+  Greeting,
 } from "./styles"
 
 import EmoticonImage from "@assets/happy.png"
 
-import Icon from "@expo/vector-icons/Feather"
+import Icon from "@expo/vector-icons/MaterialIcons"
 import { useTheme } from "styled-components/native"
 import { InputSearch } from "@components/InputSearch"
 import { Card } from "@components/Card"
 import { Button } from "@components/Button"
-import { ScrollView } from "react-native"
+import { ScrollView, TouchableOpacity } from "react-native"
 
 export const Home = () => {
   const [search, setSearch] = useState("")
@@ -30,14 +29,17 @@ export const Home = () => {
   return (
     <Container>
       <Header>
-        <TitleWrapper>
+        <Greeting>
           <Emoticon source={EmoticonImage} />
           <Title>Olá, Admin</Title>
 
-          <LogOut onPress={() => console.log("Clic")}>
-            <Icon name="log-out" size={24} color={theme.COLORS.TITLE} />
-          </LogOut>
-        </TitleWrapper>
+          <TouchableOpacity
+            style={{ marginLeft: "auto" }}
+            onPress={() => console.log("Clic")}
+          >
+            <Icon name="logout" size={24} color={theme.COLORS.TITLE} />
+          </TouchableOpacity>
+        </Greeting>
         <SearchWrapper>
           <InputSearch
             value={search}
