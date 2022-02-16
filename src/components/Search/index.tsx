@@ -19,7 +19,7 @@ type Props = RectButtonProps &
     clear: () => void
   }
 
-export const InputSearch = ({ value, onChangeText, clear, onPress }: Props) => {
+export const Search = ({ value, onChangeText, clear, onPress }: Props) => {
   const theme = useTheme()
 
   return (

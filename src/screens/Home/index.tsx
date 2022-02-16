@@ -15,7 +15,7 @@ import EmoticonImage from "@assets/happy.png"
 
 import Icon from "@expo/vector-icons/MaterialIcons"
 import { useTheme } from "styled-components/native"
-import { InputSearch } from "@components/InputSearch"
+import { Search } from "@components/Search"
 import { Card } from "@components/Card"
 import { Button } from "@components/Button"
 import { ScrollView, TouchableOpacity } from "react-native"
