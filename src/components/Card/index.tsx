@@ -15,12 +15,15 @@ import Pizza from "@assets/pizza.png"
 
 import Icon from "@expo/vector-icons/Feather"
 import { useTheme } from "styled-components/native"
+import { RectButtonProps } from "react-native-gesture-handler"
 
-export const Card = () => {
+type Props = RectButtonProps & {}
+
+export const Card = ({ ...rest }: Props) => {
   const theme = useTheme()
   return (
     <Container>
-      <Content>
+      <Content {...rest}>
         <Image source={Pizza} />
         <Details>
           <Wrapper>

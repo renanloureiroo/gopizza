@@ -52,7 +52,6 @@ export const Line = styled.View`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.COLORS.SHAPE};
-  margin: ${RFValue(12)}px 0;
 
   margin-left: ${RFValue(124)}px;
 `
