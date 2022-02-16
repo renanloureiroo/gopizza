@@ -1,4 +1,4 @@
-import { BorderlessButton, RectButton } from "react-native-gesture-handler"
+import { RectButton } from "react-native-gesture-handler"
 import { RFValue } from "react-native-responsive-fontsize"
 import styled, { css } from "styled-components/native"
 
@@ -30,7 +30,7 @@ export const Input = styled.TextInput`
   `}
 `
 
-export const ClearButton = styled(BorderlessButton)``
+export const ClearButton = styled.TouchableOpacity``
 
 export const SearchButton = styled(RectButton)`
   height: ${RFValue(48)}px;

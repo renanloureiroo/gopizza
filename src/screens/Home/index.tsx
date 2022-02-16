@@ -41,11 +41,7 @@ export const Home = () => {
           </TouchableOpacity>
         </Greeting>
         <SearchWrapper>
-          <InputSearch
-            value={search}
-            onChangeText={setSearch}
-            clear={handleClear}
-          />
+          <Search value={search} onChangeText={setSearch} clear={handleClear} />
         </SearchWrapper>
       </Header>
       <Content>
