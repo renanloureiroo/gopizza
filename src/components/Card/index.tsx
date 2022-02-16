@@ -3,10 +3,12 @@ import React from "react"
 import {
   Container,
   Content,
-  Description,
+  Details,
   Image,
-  Title,
+  Name,
   Wrapper,
+  Description,
+  Line,
 } from "./styles"
 
 import Pizza from "@assets/pizza.png"
@@ -18,16 +20,19 @@ export const Card = () => {
   const theme = useTheme()
   return (
     <Container>
-      <Image source={Pizza} />
       <Content>
-        <Wrapper>
-          <Title>Margherita</Title>
-          <Icon name="chevron-right" size={16} color={theme.COLORS.SHAPE} />
-        </Wrapper>
-        <Description>
-          Mussarela, manjericão fresco, parmesão e tomate.
-        </Description>
+        <Image source={Pizza} />
+        <Details>
+          <Wrapper>
+            <Name>Margherita</Name>
+            <Icon name="chevron-right" size={16} color={theme.COLORS.SHAPE} />
+          </Wrapper>
+          <Description>
+            Mussarela, manjericão fresco, parmesão e tomate.
+          </Description>
+        </Details>
       </Content>
+      <Line />
     </Container>
   )
 }

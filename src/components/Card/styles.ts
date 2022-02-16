@@ -1,28 +1,25 @@
+import { RectButton } from "react-native-gesture-handler"
 import { RFValue } from "react-native-responsive-fontsize"
 import styled, { css } from "styled-components/native"
 
 export const Container = styled.View`
-  flex: 1;
-  max-height: ${RFValue(104)}px;
+  width: 100%;
+`
+export const Content = styled(RectButton)`
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 `
 
 export const Image = styled.Image`
-  height: 100%;
-  min-width: 25%;
-  max-width: 25%;
+  width: ${RFValue(104)}px;
+  height: ${RFValue(104)}px;
+
+  border-radius: ${RFValue(52)}px;
+  margin-right: ${RFValue(20)}px;
 `
 
-export const Content = styled.View`
-  height: 100%;
-  padding: ${RFValue(18)}px 0;
+export const Details = styled.View`
   flex: 1;
-  margin-left: ${RFValue(20)}px;
-
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.COLORS.SHAPE};
 `
 
 export const Wrapper = styled.View`
@@ -31,9 +28,9 @@ export const Wrapper = styled.View`
   justify-content: space-between;
 `
 
-export const Title = styled.Text`
+export const Name = styled.Text`
+  flex: 1;
   font-size: ${RFValue(20)}px;
-  margin-bottom: ${RFValue(8)}px;
 
   ${({ theme }) => css`
     color: ${theme.COLORS.SECONDARY_900};
@@ -49,4 +46,13 @@ export const Description = styled.Text`
     color: ${theme.COLORS.SECONDARY_500};
     font-family: ${theme.FONTS.TEXT};
   `}
+`
+
+export const Line = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.COLORS.SHAPE};
+  margin: ${RFValue(12)}px 0;
+
+  margin-left: ${RFValue(124)}px;
 `
