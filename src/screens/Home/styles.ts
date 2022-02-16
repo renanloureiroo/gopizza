@@ -1,5 +1,4 @@
 import { LinearGradient } from "expo-linear-gradient"
-import { BorderlessButton } from "react-native-gesture-handler"
 import {
   getBottomSpace,
   getStatusBarHeight,
@@ -48,15 +47,32 @@ export const SearchWrapper = styled.View`
   bottom: -${RFValue(24)}px;
 `
 
+export const Menu = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: ${RFValue(50)}px 0 ${RFValue(22)}px 0;
+
+  border-bottom-width: 1px;
+  border-bottom-color: ${({ theme }) => theme.COLORS.SHAPE};
+`
+
+export const MenuTitle = styled.Text`
+  font-size: ${RFValue(20)}px;
+  font-family: ${({ theme }) => theme.FONTS.TITLE};
+  color: ${({ theme }) => theme.COLORS.SECONDARY_900};
+`
+
+export const MenuCount = styled.Text`
+  font-size: ${RFValue(14)}px;
+  font-family: ${({ theme }) => theme.FONTS.TEXT};
+  color: ${({ theme }) => theme.COLORS.SECONDARY_900};
+`
+
 export const Content = styled.View`
   flex: 1;
-  margin-top: ${RFValue(47)}px;
-  border-top-width: 1px;
-  border-top-color: ${({ theme }) => theme.COLORS.SHAPE};
-
-  margin-left: 24px;
-  margin-right: 24px;
-  padding-top: ${RFValue(20)}px;
+  padding: ${RFValue(24)}px;
 `
 
 export const Footer = styled.View`

@@ -9,6 +9,9 @@ import {
   SearchWrapper,
   Title,
   Greeting,
+  Menu,
+  MenuTitle,
+  MenuCount,
 } from "./styles"
 
 import EmoticonImage from "@assets/happy.png"
@@ -50,6 +53,10 @@ export const Home = () => {
         </SearchWrapper>
       </Header>
       <Content>
+        <Menu>
+          <MenuTitle>Cardápio</MenuTitle>
+          <MenuCount>32 pizzas</MenuCount>
+        </Menu>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Card />
           <Card />
