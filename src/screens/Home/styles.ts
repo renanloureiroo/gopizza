@@ -54,6 +54,8 @@ export const Menu = styled.View`
 
   padding: ${RFValue(50)}px 0 ${RFValue(22)}px 0;
 
+  margin-bottom: ${RFValue(20)}px;
+
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.COLORS.SHAPE};
 `
