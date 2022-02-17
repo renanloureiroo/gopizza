@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import firestore from "@react-native-firebase/firestore"
 
 import {
   Container,
@@ -19,16 +20,57 @@ import EmoticonImage from "@assets/happy.png"
 import Icon from "@expo/vector-icons/MaterialIcons"
 import { useTheme } from "styled-components/native"
 import { Search } from "@components/Search"
-import { Card } from "@components/Card"
+import { Card, Pizza } from "@components/Card"
 import { Button } from "@components/Button"
-import { ScrollView, TouchableOpacity } from "react-native"
+import { FlatList, ScrollView, TouchableOpacity } from "react-native"
+import { RFValue } from "react-native-responsive-fontsize"
 
 export const Home = () => {
+  const [pizzas, setPizzas] = useState<Pizza[]>([])
   const [search, setSearch] = useState("")
+
+  const theme = useTheme()
+
   const handleClear = () => {
     setSearch("")
+    fetchPizzas("")
   }
-  const theme = useTheme()
+  const handleSearch = () => {
+    fetchPizzas(search)
+  }
+
+  const fetchPizzas = (value: string) => {
+    const formattedValue = value.toLowerCase().trim()
+    try {
+      firestore()
+        .collection("pizzas")
+        .orderBy("name_insensitive")
+        .startAt(formattedValue)
+        .endAt(`${formattedValue}\uf8ff`)
+        .get()
+        .then((response) => {
+          const data = response.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            }
+          }) as Pizza[]
+          console.log(data)
+          setPizzas(data)
+        })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchPizzas("")
+  }, [])
+
+  useEffect(() => {
+    console.log(search)
+  }, [search])
+
   return (
     <Container>
       <Header>
@@ -48,7 +90,7 @@ export const Home = () => {
             value={search}
             onChangeText={setSearch}
             onClear={handleClear}
-            onSearch={() => {}}
+            onSearch={handleSearch}
           />
         </SearchWrapper>
       </Header>
@@ -57,17 +99,16 @@ export const Home = () => {
           <MenuTitle>Cardápio</MenuTitle>
           <MenuCount>32 pizzas</MenuCount>
         </Menu>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </ScrollView>
+        <FlatList
+          data={pizzas}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Card data={item} />}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: RFValue(20),
+            paddingBottom: RFValue(125),
+          }}
+        />
       </Content>
       <Footer>
         <Button title="Cadastrar pizza" />

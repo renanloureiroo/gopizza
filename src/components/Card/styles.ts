@@ -10,7 +10,7 @@ export const Content = styled(RectButton)`
   align-items: center;
 `
 
-export const Image = styled.Image`
+export const Photo = styled.Image`
   width: ${RFValue(104)}px;
   height: ${RFValue(104)}px;
 

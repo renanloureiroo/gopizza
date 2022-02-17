@@ -100,9 +100,9 @@ export const Product = () => {
           p: form.smallPrice,
           m: form.mediumPrice,
           g: form.largePrice,
-          photo_url,
-          photo_path: reference.fullPath,
         },
+        photo_url,
+        photo_path: reference.fullPath,
       }
 
       await firestore().collection("pizzas").add(newPizza)

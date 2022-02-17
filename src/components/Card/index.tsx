@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import {
   Container,
   Content,
   Details,
-  Image,
+  Photo,
   Name,
   Wrapper,
   Description,
@@ -17,25 +17,47 @@ import Icon from "@expo/vector-icons/Feather"
 import { useTheme } from "styled-components/native"
 import { RectButtonProps } from "react-native-gesture-handler"
 
-type Props = RectButtonProps & {}
+type Pizza = {
+  id: string
+  name: string
+  description: string
+  name_insensitive: string
+  photo_path: string
+  photo_url: string
+  prices_sizes: {
+    p: number
+    m: number
+    g: number
+  }
+}
 
-export const Card = ({ ...rest }: Props) => {
+interface Props extends RectButtonProps {
+  data: Pizza
+}
+
+const Card = ({ data, ...rest }: Props) => {
   const theme = useTheme()
+
   return (
     <Container>
       <Content {...rest}>
-        <Image source={Pizza} />
+        <Photo
+          source={{
+            uri: data.photo_url,
+          }}
+        />
+
         <Details>
           <Wrapper>
-            <Name>Margherita</Name>
+            <Name>{data.name}</Name>
             <Icon name="chevron-right" size={16} color={theme.COLORS.SHAPE} />
           </Wrapper>
-          <Description>
-            Mussarela, manjericão fresco, parmesão e tomate.
-          </Description>
+          <Description>{data.description}</Description>
         </Details>
       </Content>
       <Line />
     </Container>
   )
 }
+
+export { Card, Pizza }
