@@ -8,13 +8,12 @@ import { useFonts, DMSans_400Regular } from "@expo-google-fonts/dm-sans"
 import { DMSerifDisplay_400Regular } from "@expo-google-fonts/dm-serif-display"
 import { Inter_500Medium } from "@expo-google-fonts/inter"
 
-import { SignIn } from "@screens/SignIn"
-import { Product } from "@screens/Product"
 import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 import { AppProvider } from "./src/contexts"
-import { Home } from "@screens/Home"
+
+import { Routes } from "./src/routes/index."
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -34,7 +33,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppProvider>
         <StatusBar style="light" translucent backgroundColor="transparent" />
-        <Home />
+        <Routes />
       </AppProvider>
     </GestureHandlerRootView>
   )
