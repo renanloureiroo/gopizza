@@ -105,7 +105,11 @@ export const Home = () => {
       <Content>
         <Menu>
           <MenuTitle>Cardápio</MenuTitle>
-          <MenuCount>32 pizzas</MenuCount>
+          <MenuCount>
+            {pizzas.length == 1
+              ? `${pizzas.length} pizza`
+              : `${pizzas.length} pizzas`}
+          </MenuCount>
         </Menu>
         <FlatList
           data={pizzas}
