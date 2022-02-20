@@ -23,13 +23,14 @@ import { Search } from "@components/Search"
 import { Card, Pizza } from "@components/Card"
 import { Button } from "@components/Button"
 import { FlatList, TouchableOpacity } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
 import { useNavigation, useFocusEffect } from "@react-navigation/native"
+import { useAuth } from "@hooks/auth"
 
 export const Home = () => {
   const [pizzas, setPizzas] = useState<Pizza[]>([])
   const [search, setSearch] = useState("")
 
+  const { signOut } = useAuth()
   const theme = useTheme()
   const { navigate } = useNavigation()
 
@@ -86,10 +87,7 @@ export const Home = () => {
           <Emoticon source={EmoticonImage} />
           <Title>Olá, Admin</Title>
 
-          <TouchableOpacity
-            style={{ marginLeft: "auto" }}
-            onPress={() => console.log("Clic")}
-          >
+          <TouchableOpacity style={{ marginLeft: "auto" }} onPress={signOut}>
             <Icon name="logout" size={24} color={theme.COLORS.TITLE} />
           </TouchableOpacity>
         </Greeting>
