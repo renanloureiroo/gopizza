@@ -114,10 +114,6 @@ export const Home = () => {
             <Card data={item} onPress={() => handleOpen(item.id)} />
           )}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingTop: RFValue(20),
-            paddingBottom: RFValue(125),
-          }}
         />
       </Content>
       <Footer>

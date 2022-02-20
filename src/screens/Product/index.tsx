@@ -252,6 +252,8 @@ export const Product = () => {
             initialValues={initialValues}
             onSubmit={handleAdd}
             validationSchema={schema}
+            validateOnChange={false}
+            validateOnBlur={false}
             enableReinitialize
           >
             {({ handleChange, submitForm, values, errors, resetForm }) => (
