@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useCallback } from "react"
 import firestore from "@react-native-firebase/firestore"
 
 import {
@@ -24,7 +24,7 @@ import { Card, Pizza } from "@components/Card"
 import { Button } from "@components/Button"
 import { FlatList, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useFocusEffect } from "@react-navigation/native"
 
 export const Home = () => {
   const [pizzas, setPizzas] = useState<Pizza[]>([])
@@ -43,6 +43,10 @@ export const Home = () => {
 
   const handleOpen = (id: string) => {
     navigate("product", { id })
+  }
+
+  const handleNewPizza = () => {
+    navigate("product", {})
   }
 
   const fetchPizzas = (value: string) => {
@@ -69,13 +73,11 @@ export const Home = () => {
     }
   }
 
-  useEffect(() => {
-    fetchPizzas("")
-  }, [])
-
-  useEffect(() => {
-    console.log(search)
-  }, [search])
+  useFocusEffect(
+    useCallback(() => {
+      fetchPizzas("")
+    }, [])
+  )
 
   return (
     <Container>
@@ -119,7 +121,7 @@ export const Home = () => {
         />
       </Content>
       <Footer>
-        <Button title="Cadastrar pizza" />
+        <Button title="Cadastrar pizza" onPress={handleNewPizza} />
       </Footer>
     </Container>
   )

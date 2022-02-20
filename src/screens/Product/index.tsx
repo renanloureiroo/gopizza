@@ -5,20 +5,19 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native"
 import { TouchableWithoutFeedback, Alert } from "react-native"
 import * as ImagePicker from "expo-image-picker"
-import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 
-import { useRoute } from "@react-navigation/native"
+import { useRoute, useNavigation } from "@react-navigation/native"
 import { ProductNavigationProps } from "src/@types/navigation"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "styled-components/native"
-// import { useForm } from "react-hook-form"
 import { Formik } from "formik"
 
 import {
@@ -42,8 +41,6 @@ import { Input } from "@components/Input"
 import { Button } from "@components/Button"
 import { Photo } from "@components/Photo"
 import { BackButton } from "@components/BackButton"
-import { string } from "yup/lib/locale"
-import { ProductImage } from "@screens/Order/styles"
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório!"),
@@ -83,6 +80,8 @@ export const Product = () => {
     image: "",
   })
   const [image, setImage] = useState("")
+  const [photoPath, setPhotoPath] = useState("")
+  const [photoUrl, setPhotoUrl] = useState("")
 
   const inputDescription = useRef<TextInput>(null)
   const inputSmall = useRef<TextInput>(null)
@@ -91,6 +90,7 @@ export const Product = () => {
 
   const theme = useTheme()
 
+  const { goBack, navigate } = useNavigation()
   const route = useRoute()
   const { id } = route.params as ProductNavigationProps
 
@@ -99,28 +99,28 @@ export const Product = () => {
     try {
       console.log(form)
 
-      // if (!image) return
+      if (!image) return
 
-      // const fileName = new Date().getTime()
-      // const reference = storage().ref(`/pizzas/${fileName}.png`)
+      const fileName = new Date().getTime()
+      const reference = storage().ref(`/pizzas/${fileName}.png`)
 
-      // await reference.putFile(image)
-      // const photo_url = await reference.getDownloadURL()
+      await reference.putFile(image)
+      const photo_url = await reference.getDownloadURL()
 
-      // const newPizza = {
-      //   name: form.name,
-      //   name_insensitive: form.name.toLowerCase().trim(),
-      //   description: form.description,
-      //   prices_sizes: {
-      //     p: form.smallPrice,
-      //     m: form.mediumPrice,
-      //     g: form.largePrice,
-      //   },
-      //   photo_url,
-      //   photo_path: reference.fullPath,
-      // }
+      const newPizza = {
+        name: form.name,
+        name_insensitive: form.name.toLowerCase().trim(),
+        description: form.description,
+        prices_sizes: {
+          p: form.smallPrice,
+          m: form.mediumPrice,
+          g: form.largePrice,
+        },
+        photo_url,
+        photo_path: reference.fullPath,
+      }
 
-      // await firestore().collection("pizzas").add(newPizza)
+      await firestore().collection("pizzas").add(newPizza)
 
       Alert.alert("Cadastro", "Pizza cadastrada com sucesso.")
     } catch (err) {
@@ -129,6 +129,54 @@ export const Product = () => {
       setImage("")
       setIsLoading(false)
     }
+  }
+
+  // const handleUpdate = async (form: FormData) => {
+  //   firestore()
+  //     .collection("pizzas")
+  //     .doc(id)
+  //     .update({
+  //       name: form.name,
+  //       name_insensitive: form.name.toLowerCase().trim(),
+  //       description: form.description,
+  //       photoPath: photoPath,
+  //       photo_url: photoUrl,
+  //       prices_sizes: {
+  //         p: form.smallPrice,
+  //         m: form.mediumPrice,
+  //         g: form.largePrice,
+  //       },
+  //     })
+  // }
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Excluir Produto",
+      "Tem certeza que deseja excluir este produto?",
+      [
+        { text: "cancelar", onPress: () => {}, style: "cancel" },
+        {
+          text: "Excluir",
+          onPress: () => {
+            firestore()
+              .collection("pizzas")
+              .doc(id)
+              .delete()
+              .then(() => {
+                storage()
+                  .ref(photoPath)
+                  .delete()
+                  .then(() => navigate("home"))
+              })
+          },
+          style: "default",
+        },
+      ]
+    )
+  }
+
+  const handleGoBack = () => {
+    goBack()
   }
 
   async function handlePickerImage() {
@@ -170,6 +218,7 @@ export const Product = () => {
             largePrice: product.prices_sizes.g,
           })
           setImage(product.photo_url)
+          setPhotoPath(product.photo_path)
         })
     }
   }, [id])
@@ -181,25 +230,31 @@ export const Product = () => {
         enabled
       >
         <Header>
-          <BackButton />
+          <BackButton onPress={handleGoBack} />
           <Title>Cadastrar</Title>
-          <TouchableOpacity>
-            <DeleteLabel>Deletar</DeleteLabel>
-          </TouchableOpacity>
+          {!id ? (
+            <View style={{ width: 24 }} />
+          ) : (
+            <TouchableOpacity onPress={handleDelete}>
+              <DeleteLabel>Deletar</DeleteLabel>
+            </TouchableOpacity>
+          )}
         </Header>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Upload>
             <Photo uri={image} />
-            <PickImageButton title="Carregar" onPress={handlePickerImage} />
+            {!id && (
+              <PickImageButton title="Carregar" onPress={handlePickerImage} />
+            )}
           </Upload>
 
           <Formik
             initialValues={initialValues}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handleAdd}
             validationSchema={schema}
             enableReinitialize
           >
-            {({ handleChange, submitForm, values, errors, touched }) => (
+            {({ handleChange, submitForm, values, errors, resetForm }) => (
               <Form>
                 <InputGroup>
                   <Label>Nome</Label>
@@ -261,13 +316,17 @@ export const Product = () => {
                     size="G"
                   />
                 </InputGroup>
-
-                <Button
-                  title="Cadastrar pizza"
-                  type="secondary"
-                  isLoading={isLoading}
-                  onPress={submitForm}
-                />
+                {!id && (
+                  <Button
+                    title="Cadastrar pizza"
+                    type="secondary"
+                    isLoading={isLoading}
+                    onPress={async () => {
+                      await submitForm()
+                      resetForm()
+                    }}
+                  />
+                )}
               </Form>
             )}
           </Formik>
