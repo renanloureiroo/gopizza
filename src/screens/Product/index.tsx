@@ -18,7 +18,8 @@ import { useRoute } from "@react-navigation/native"
 import { ProductNavigationProps } from "src/@types/navigation"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "styled-components/native"
-import { useForm } from "react-hook-form"
+// import { useForm } from "react-hook-form"
+import { Formik } from "formik"
 
 import {
   Container,
@@ -42,6 +43,7 @@ import { Button } from "@components/Button"
 import { Photo } from "@components/Photo"
 import { BackButton } from "@components/BackButton"
 import { string } from "yup/lib/locale"
+import { ProductImage } from "@screens/Order/styles"
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório!"),
@@ -66,13 +68,21 @@ type FormData = {
   smallPrice: number
   mediumPrice: number
   largePrice: number
+  image: string
 }
 
 export const Product = () => {
-  const [image, setImage] = useState("")
-
   const [isLoading, setIsLoading] = useState(false)
-  const [product, setProduct] = useState<Pizza | null>(null)
+
+  const [initialValues, setInitialValues] = useState<FormData>({
+    name: "",
+    description: "",
+    smallPrice: 0,
+    mediumPrice: 0,
+    largePrice: 0,
+    image: "",
+  })
+  const [image, setImage] = useState("")
 
   const inputDescription = useRef<TextInput>(null)
   const inputSmall = useRef<TextInput>(null)
@@ -80,14 +90,6 @@ export const Product = () => {
   const inputLarge = useRef<TextInput>(null)
 
   const theme = useTheme()
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  })
 
   const route = useRoute()
   const { id } = route.params as ProductNavigationProps
@@ -96,36 +98,34 @@ export const Product = () => {
     setIsLoading(true)
     try {
       console.log(form)
-      /**
-       
-      if (!image) return
 
-      const fileName = new Date().getTime()
-      const reference = storage().ref(`/pizzas/${fileName}.png`)
+      // if (!image) return
 
-      await reference.putFile(image)
-      const photo_url = await reference.getDownloadURL()
+      // const fileName = new Date().getTime()
+      // const reference = storage().ref(`/pizzas/${fileName}.png`)
 
-      const newPizza = {
-        name: form.name,
-        name_insensitive: form.name.toLowerCase().trim(),
-        description: form.description,
-        prices_sizes: {
-          p: form.smallPrice,
-          m: form.mediumPrice,
-          g: form.largePrice,
-        },
-        photo_url,
-        photo_path: reference.fullPath,
-      }
+      // await reference.putFile(image)
+      // const photo_url = await reference.getDownloadURL()
 
-      await firestore().collection("pizzas").add(newPizza)*/
+      // const newPizza = {
+      //   name: form.name,
+      //   name_insensitive: form.name.toLowerCase().trim(),
+      //   description: form.description,
+      //   prices_sizes: {
+      //     p: form.smallPrice,
+      //     m: form.mediumPrice,
+      //     g: form.largePrice,
+      //   },
+      //   photo_url,
+      //   photo_path: reference.fullPath,
+      // }
+
+      // await firestore().collection("pizzas").add(newPizza)
 
       Alert.alert("Cadastro", "Pizza cadastrada com sucesso.")
     } catch (err) {
       Alert.alert("Cadastro", "Não foi possível cadastrar a pizza.")
     } finally {
-      reset()
       setImage("")
       setIsLoading(false)
     }
@@ -160,7 +160,16 @@ export const Product = () => {
         .then((response) => {
           const product = response.data() as Pizza
           console.log(product)
-          setProduct(product)
+
+          setInitialValues({
+            name: product.name,
+            description: product.description,
+            image: product.photo_url,
+            smallPrice: product.prices_sizes.p,
+            mediumPrice: product.prices_sizes.m,
+            largePrice: product.prices_sizes.g,
+          })
+          setImage(product.photo_url)
         })
     }
   }, [id])
@@ -184,75 +193,84 @@ export const Product = () => {
             <PickImageButton title="Carregar" onPress={handlePickerImage} />
           </Upload>
 
-          <Form>
-            <InputGroup>
-              <Label>Nome</Label>
-              <Input
-                error={errors.name && errors.name.message}
-                name="name"
-                control={control}
-                style={{ color: theme.COLORS.SECONDARY_900 }}
-                onSubmitEditing={() => inputDescription.current.focus()}
-                blurOnSubmit={false}
-              />
-            </InputGroup>
-            <InputGroup>
-              <InputGroupHeader>
-                <Label>Descrição</Label>
-                <MaxCharacters>Max 60 caracteres</MaxCharacters>
-              </InputGroupHeader>
-              <Input
-                error={errors.description && errors.description.message}
-                name="description"
-                control={control}
-                ref={inputDescription}
-                blurOnSubmit={false}
-                onSubmitEditing={() => inputSmall.current.focus()}
-                multiline
-                maxLength={60}
-                style={{
-                  height: RFValue(80),
-                  color: theme.COLORS.SECONDARY_900,
-                }}
-              />
-            </InputGroup>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => console.log(values)}
+            validationSchema={schema}
+            enableReinitialize
+          >
+            {({ handleChange, submitForm, values, errors, touched }) => (
+              <Form>
+                <InputGroup>
+                  <Label>Nome</Label>
+                  <Input
+                    error={!!errors.name && errors.name}
+                    value={values.name}
+                    onChangeText={handleChange("name")}
+                    style={{ color: theme.COLORS.SECONDARY_900 }}
+                    onSubmitEditing={() => inputDescription.current.focus()}
+                    blurOnSubmit={false}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroupHeader>
+                    <Label>Descrição</Label>
+                    <MaxCharacters>Max 60 caracteres</MaxCharacters>
+                  </InputGroupHeader>
+                  <Input
+                    error={!!errors.description && errors.description}
+                    value={values.description}
+                    onChangeText={handleChange("description")}
+                    ref={inputDescription}
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => inputSmall.current.focus()}
+                    multiline
+                    maxLength={60}
+                    style={{
+                      height: RFValue(80),
+                      color: theme.COLORS.SECONDARY_900,
+                    }}
+                  />
+                </InputGroup>
 
-            <InputGroup>
-              <Label>Tamanhos de preços</Label>
-              <InputPrice
-                error={errors.smallPrice && errors.smallPrice.message}
-                name="smallPrice"
-                control={control}
-                ref={inputSmall}
-                onSubmitEditing={() => inputMedium.current.focus()}
-                blurOnSubmit={false}
-                size="P"
-              />
-              <InputPrice
-                error={errors.mediumPrice && errors.mediumPrice.message}
-                name="mediumPrice"
-                control={control}
-                ref={inputMedium}
-                onSubmitEditing={() => inputLarge.current.focus()}
-                blurOnSubmit={false}
-                size="M"
-              />
-              <InputPrice
-                error={errors.largePrice && errors.largePrice.message}
-                name="largePrice"
-                control={control}
-                ref={inputLarge}
-                size="G"
-              />
-            </InputGroup>
+                <InputGroup>
+                  <Label>Tamanhos de preços</Label>
+                  <InputPrice
+                    error={!!errors.smallPrice && errors.smallPrice}
+                    ref={inputSmall}
+                    value={String(values.smallPrice)}
+                    onChangeText={handleChange("smallPrice")}
+                    onSubmitEditing={() => inputMedium.current.focus()}
+                    blurOnSubmit={false}
+                    size="P"
+                  />
+                  <InputPrice
+                    value={String(values.mediumPrice)}
+                    onChangeText={handleChange("mediumPrice")}
+                    error={!!errors.mediumPrice && errors.mediumPrice}
+                    ref={inputMedium}
+                    onSubmitEditing={() => inputLarge.current.focus()}
+                    blurOnSubmit={false}
+                    size="M"
+                  />
+                  <InputPrice
+                    value={String(values.largePrice)}
+                    onChangeText={handleChange("largePrice")}
+                    error={!!errors.largePrice && errors.largePrice}
+                    ref={inputLarge}
+                    size="G"
+                  />
+                </InputGroup>
 
-            <Button
-              title="Cadastrar pizza"
-              type="secondary"
-              isLoading={isLoading}
-              onPress={() => handleSubmit(handleAdd)()}
-            />
-          </Form>
+                <Button
+                  title="Cadastrar pizza"
+                  type="secondary"
+                  isLoading={isLoading}
+                  onPress={submitForm}
+                />
+              </Form>
+            )}
+          </Formik>
         </ScrollView>
       </Container>
     </TouchableWithoutFeedback>

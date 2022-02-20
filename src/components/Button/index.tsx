@@ -1,5 +1,4 @@
-import React from "react"
-import { FieldValues, SubmitErrorHandler, SubmitHandler } from "react-hook-form"
+import React, { FormEvent } from "react"
 import { RectButtonProps } from "react-native-gesture-handler"
 
 import { Container, Title, Loading } from "./styles"
