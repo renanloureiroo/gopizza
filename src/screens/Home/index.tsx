@@ -22,7 +22,7 @@ import { useTheme } from "styled-components/native"
 import { Search } from "@components/Search"
 import { Card, Pizza } from "@components/Card"
 import { Button } from "@components/Button"
-import { FlatList, ScrollView, TouchableOpacity } from "react-native"
+import { FlatList, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useNavigation } from "@react-navigation/native"
 

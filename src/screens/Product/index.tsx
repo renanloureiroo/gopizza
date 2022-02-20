@@ -1,6 +1,4 @@
-import React, { useRef, useState } from "react"
-import { BackButton } from "@components/BackButton"
-import { Photo } from "@components/Photo"
+import React, { useEffect, useRef, useState } from "react"
 import {
   Keyboard,
   Platform,
@@ -18,6 +16,9 @@ import storage from "@react-native-firebase/storage"
 
 import { useRoute } from "@react-navigation/native"
 import { ProductNavigationProps } from "src/@types/navigation"
+import { RFValue } from "react-native-responsive-fontsize"
+import { useTheme } from "styled-components/native"
+import { useForm } from "react-hook-form"
 
 import {
   Container,
@@ -32,12 +33,15 @@ import {
   Label,
   MaxCharacters,
 } from "./styles"
+
+import { Pizza } from "@components/Card"
+
 import { InputPrice } from "@components/InputPrice"
 import { Input } from "@components/Input"
-import { RFValue } from "react-native-responsive-fontsize"
 import { Button } from "@components/Button"
-import { useTheme } from "styled-components/native"
-import { useForm } from "react-hook-form"
+import { Photo } from "@components/Photo"
+import { BackButton } from "@components/BackButton"
+import { string } from "yup/lib/locale"
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório!"),
@@ -68,6 +72,7 @@ export const Product = () => {
   const [image, setImage] = useState("")
 
   const [isLoading, setIsLoading] = useState(false)
+  const [product, setProduct] = useState<Pizza | null>(null)
 
   const inputDescription = useRef<TextInput>(null)
   const inputSmall = useRef<TextInput>(null)
@@ -85,11 +90,14 @@ export const Product = () => {
   })
 
   const route = useRoute()
-  const { id } = route as ProductNavigationProps
+  const { id } = route.params as ProductNavigationProps
 
   const handleAdd = async (form: FormData) => {
     setIsLoading(true)
     try {
+      console.log(form)
+      /**
+       
       if (!image) return
 
       const fileName = new Date().getTime()
@@ -111,7 +119,7 @@ export const Product = () => {
         photo_path: reference.fullPath,
       }
 
-      await firestore().collection("pizzas").add(newPizza)
+      await firestore().collection("pizzas").add(newPizza)*/
 
       Alert.alert("Cadastro", "Pizza cadastrada com sucesso.")
     } catch (err) {
@@ -142,6 +150,20 @@ export const Product = () => {
       console.error(err)
     }
   }
+
+  useEffect(() => {
+    if (id) {
+      firestore()
+        .collection("pizzas")
+        .doc(id)
+        .get()
+        .then((response) => {
+          const product = response.data() as Pizza
+          console.log(product)
+          setProduct(product)
+        })
+    }
+  }, [id])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

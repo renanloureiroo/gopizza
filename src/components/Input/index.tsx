@@ -1,4 +1,4 @@
-import React, { useState, Ref } from "react"
+import React, { useState, Ref, useEffect } from "react"
 import { TextInput, TextInputProps } from "react-native"
 import { useTheme } from "styled-components/native"
 
@@ -19,7 +19,15 @@ interface Props extends TextInputProps {
 export const Input = React.forwardRef<TextInput, Props>((props, ref) => {
   const [isVisible, setIsVisible] = useState(false)
 
-  const { type = "email", themeInput, control, name, error, ...rest } = props
+  const {
+    type = "email",
+
+    themeInput,
+    control,
+    name,
+    error,
+    ...rest
+  } = props
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
