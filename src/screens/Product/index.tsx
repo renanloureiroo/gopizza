@@ -16,6 +16,9 @@ import * as yup from "yup"
 import firestore from "@react-native-firebase/firestore"
 import storage from "@react-native-firebase/storage"
 
+import { useRoute } from "@react-navigation/native"
+import { ProductNavigationProps } from "src/@types/navigation"
+
 import {
   Container,
   Header,
@@ -34,7 +37,7 @@ import { Input } from "@components/Input"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Button } from "@components/Button"
 import { useTheme } from "styled-components/native"
-import { FieldValues, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório!"),
@@ -80,6 +83,9 @@ export const Product = () => {
   } = useForm({
     resolver: yupResolver(schema),
   })
+
+  const route = useRoute()
+  const { id } = route as ProductNavigationProps
 
   const handleAdd = async (form: FormData) => {
     setIsLoading(true)

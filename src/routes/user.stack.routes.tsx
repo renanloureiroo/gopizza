@@ -10,8 +10,8 @@ const { Navigator, Screen } = createNativeStackNavigator()
 export const UserStackRoutes = () => {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="Home" component={Home} />
-      <Screen name="Product" component={Product} />
+      <Screen name="home" component={Home} />
+      <Screen name="product" component={Product} />
     </Navigator>
   )
 }

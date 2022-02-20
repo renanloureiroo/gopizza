@@ -24,12 +24,14 @@ import { Card, Pizza } from "@components/Card"
 import { Button } from "@components/Button"
 import { FlatList, ScrollView, TouchableOpacity } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
+import { useNavigation } from "@react-navigation/native"
 
 export const Home = () => {
   const [pizzas, setPizzas] = useState<Pizza[]>([])
   const [search, setSearch] = useState("")
 
   const theme = useTheme()
+  const { navigate } = useNavigation()
 
   const handleClear = () => {
     setSearch("")
@@ -37,6 +39,10 @@ export const Home = () => {
   }
   const handleSearch = () => {
     fetchPizzas(search)
+  }
+
+  const handleOpen = (id: string) => {
+    navigate("product", { id })
   }
 
   const fetchPizzas = (value: string) => {
@@ -102,8 +108,10 @@ export const Home = () => {
         <FlatList
           data={pizzas}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Card data={item} />}
-          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <Card data={item} onPress={() => handleOpen(item.id)} />
+          )}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingTop: RFValue(20),
             paddingBottom: RFValue(125),
