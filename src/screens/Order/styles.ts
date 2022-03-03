@@ -21,7 +21,7 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
 
   align-items: center;
 
-  padding: 24px;
+  padding: 0 24px;
 
   padding-top: ${getStatusBarHeight() + 24}px;
 `
