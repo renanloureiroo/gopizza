@@ -53,8 +53,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         name,
         isAdmin,
       }
-      
-      await AsyncStorage.setItem("@gopizza:user", JSON.stringify(userData))
+
+      await AsyncStorage.setItem(USER_COLLECTION, JSON.stringify(userData))
 
       setUser(userData)
     } catch (err) {

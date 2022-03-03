@@ -24,9 +24,7 @@ export const InputText = styled(TextInput).attrs<InputProps>(
       autoCapitalize: "none",
       autoCorrect: false,
       placeholderTextColor:
-        themeInput === "dark"
-          ? theme.COLORS.PRIMARY_50
-          : theme.COLORS.SECONDARY_900,
+        themeInput === "dark" ? theme.COLORS.SHAPE : theme.COLORS.SECONDARY_900,
     }
   }
 )<InputProps>`

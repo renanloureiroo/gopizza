@@ -30,7 +30,7 @@ export const Home = () => {
   const [pizzas, setPizzas] = useState<Pizza[]>([])
   const [search, setSearch] = useState("")
 
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
   const theme = useTheme()
   const { navigate } = useNavigation()
 
@@ -118,9 +118,11 @@ export const Home = () => {
           showsVerticalScrollIndicator={false}
         />
       </Content>
-      <Footer>
-        <Button title="Cadastrar pizza" onPress={handleNewPizza} />
-      </Footer>
+      {user.isAdmin && (
+        <Footer>
+          <Button title="Cadastrar pizza" onPress={handleNewPizza} />
+        </Footer>
+      )}
     </Container>
   )
 }
