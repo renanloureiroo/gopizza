@@ -15,6 +15,7 @@ import { AppProvider } from "./src/contexts"
 
 import { Routes } from "./src/routes/index."
 import { Order } from "@screens/Order"
+import { Orders } from "@screens/Orders"
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -35,7 +36,7 @@ export default function App() {
       <AppProvider>
         <StatusBar style="light" translucent backgroundColor="transparent" />
         {/* <Routes /> */}
-        <Order />
+        <Orders />
       </AppProvider>
     </GestureHandlerRootView>
   )

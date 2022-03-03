@@ -21,9 +21,13 @@ import PizzaImage from "@assets/pizza.png"
 import { SelectPizzaSize } from "@components/SelectPizzaSize"
 import { InputNumber } from "@components/InputNumber"
 import { Button } from "@components/Button"
+import { useRoute } from "@react-navigation/native"
 
 export const Order = () => {
   const [size, setSize] = useState<"small" | "medium" | "large" | null>(null)
+
+  // const { params } = useRoute()
+  // const { id } = params
 
   const handleSelectSize = (size: "small" | "medium" | "large" | null) => {
     setSize(size)
