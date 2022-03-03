@@ -22,17 +22,17 @@ export const Orders = () => {
         />
         <OrderCard
           status="preparando"
-          index={1}
+          index={2}
           url="https://github.com/renanloureiroo.png"
         />
         <OrderCard
           status="preparando"
-          index={1}
+          index={3}
           url="https://github.com/renanloureiroo.png"
         />
         <OrderCard
           status="pronto"
-          index={1}
+          index={4}
           url="https://github.com/renanloureiroo.png"
         />
       </Content>
