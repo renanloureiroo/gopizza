@@ -71,6 +71,8 @@ type FormData = {
 export const Product = () => {
   const [isLoading, setIsLoading] = useState(false)
 
+  const [fetch, setFetch] = useState(false)
+
   const [initialValues, setInitialValues] = useState<FormData>({
     name: "",
     description: "",
@@ -200,27 +202,33 @@ export const Product = () => {
   }
 
   useEffect(() => {
-    if (id) {
-      firestore()
-        .collection("pizzas")
-        .doc(id)
-        .get()
-        .then((response) => {
-          const product = response.data() as Pizza
-          console.log(product)
+    if (!fetch) {
+      setFetch(true)
+      if (id) {
+        firestore()
+          .collection("pizzas")
+          .doc(id)
+          .get()
+          .then((response) => {
+            const product = response.data() as Pizza
+            console.log(product)
 
-          setInitialValues({
-            name: product.name,
-            description: product.description,
-            image: product.photo_url,
-            smallPrice: product.prices_sizes.p,
-            mediumPrice: product.prices_sizes.m,
-            largePrice: product.prices_sizes.g,
+            setInitialValues({
+              name: product.name,
+              description: product.description,
+              image: product.photo_url,
+              smallPrice: product.prices_sizes.p,
+              mediumPrice: product.prices_sizes.m,
+              largePrice: product.prices_sizes.g,
+            })
+            setImage(product.photo_url)
+            setPhotoPath(product.photo_path)
           })
-          setImage(product.photo_url)
-          setPhotoPath(product.photo_path)
-        })
+          .finally(() => setFetch(false))
+      }
     }
+
+    return () => setFetch(false)
   }, [id])
 
   return (

@@ -11,7 +11,7 @@ interface Props extends TextInputProps {
   type?: "email" | "password"
   themeInput?: "dark" | "light"
 
-  error: string
+  error?: string
 }
 
 export const Input = React.forwardRef<TextInput, Props>((props, ref) => {

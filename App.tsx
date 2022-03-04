@@ -1,6 +1,6 @@
 import React from "react"
 
-import { LogBox } from "react-native"
+import { LogBox, Text, View } from "react-native"
 
 import AppLoading from "expo-app-loading"
 

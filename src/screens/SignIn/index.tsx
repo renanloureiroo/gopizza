@@ -37,6 +37,7 @@ export const SignIn = () => {
       if (!email || !password) return
       await signIn({ email, password })
     } catch (err) {
+      setLoading(false)
       console.log(err.message)
       if (
         err.message === "auth/invalid-email" ||
@@ -68,8 +69,6 @@ export const SignIn = () => {
           })
         }
       }
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -98,13 +97,11 @@ export const SignIn = () => {
             <Form>
               <Title>Login</Title>
               <Input
-                error=""
                 placeholder="E-mail"
                 value={email}
                 onChangeText={setEmail}
               />
               <Input
-                error=""
                 placeholder="Senha"
                 type="password"
                 value={password}
