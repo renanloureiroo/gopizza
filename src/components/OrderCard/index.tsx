@@ -1,3 +1,4 @@
+import firestore from "@react-native-firebase/firestore"
 import React from "react"
 
 import { Container, Photo, Status, Subtitle, Title } from "./styles"
@@ -5,6 +6,7 @@ import { Container, Photo, Status, Subtitle, Title } from "./styles"
 interface OrderCardProps {
   index: number
   data: {
+    id: string
     photo_url: string
     status: "pronto" | "preparando" | "entregue"
     name: string
@@ -14,6 +16,15 @@ interface OrderCardProps {
 }
 
 export const OrderCard = ({ index, data }: OrderCardProps) => {
+  const handleState = () => {
+    if (data.status === "pronto") {
+      firestore()
+        .collection("orders")
+        .doc(data.id)
+        .update({ status: "entregue" })
+    }
+  }
+
   return (
     <Container index={index}>
       <Photo source={{ uri: data.photo_url }} />
