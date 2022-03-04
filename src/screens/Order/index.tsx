@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BackButton } from "@components/BackButton"
 import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native"
-
+import { OrderNavigationProps } from "src/@types/navigation"
+import firestore from "@react-native-firebase/firestore"
 import {
   Container,
   Header,
@@ -23,15 +24,58 @@ import { InputNumber } from "@components/InputNumber"
 import { Button } from "@components/Button"
 import { useRoute } from "@react-navigation/native"
 
+type Pizza = {
+  id: string
+  name: string
+  name_insensitive: string
+  photo_url: string
+  prices_sizes: {
+    p: number
+    m: number
+    g: number
+  }
+}
+
 export const Order = () => {
-  const [size, setSize] = useState<"small" | "medium" | "large" | null>(null)
+  const [size, setSize] = useState<"p" | "m" | "g">("p")
+  const [data, setData] = useState<Pizza>({} as Pizza)
+  const [fetchData, setFetchData] = useState(false)
 
-  // const { params } = useRoute()
-  // const { id } = params
+  const [price, setPrice] = useState<number>(0)
 
-  const handleSelectSize = (size: "small" | "medium" | "large" | null) => {
+  const [desk, setDesk] = useState("")
+  const [quantity, setQuantity] = useState(1)
+
+  const routes = useRoute()
+  const { id } = routes.params as OrderNavigationProps
+
+  const handleSelectSize = (size: "p" | "m" | "g") => {
     setSize(size)
   }
+
+  useEffect(() => {
+    if (!fetchData) {
+      setFetchData(true)
+      firestore()
+        .collection("pizzas")
+        .doc(id)
+        .get()
+        .then((response) => {
+          const product = response.data() as Pizza
+          console.log(product)
+          setData(product)
+        })
+    }
+
+    return () => setFetchData(false)
+  }, [])
+
+  useEffect(() => {
+    if (!!data.prices_sizes) {
+      setPrice(data.prices_sizes[size])
+    }
+  }, [size, data])
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container
@@ -43,40 +87,48 @@ export const Order = () => {
             <BackButton />
           </WrapperBackButton>
           <WrapperProductImage>
-            <ProductImage source={PizzaImage} />
+            <ProductImage source={{ uri: data.photo_url }} />
           </WrapperProductImage>
         </Header>
 
         <ContentWrapper>
           <Content>
-            <Title>Margherita</Title>
+            <Title>{data.name}</Title>
 
             <SelectedTitle>Selecione um tamanho</SelectedTitle>
 
             <WrapperSelect>
               <SelectPizzaSize
                 title="Pequena"
-                onPress={() => handleSelectSize("small")}
-                selected={size === "small"}
+                onPress={() => handleSelectSize("p")}
+                selected={size === "p"}
               />
               <SelectPizzaSize
                 title="Média"
-                onPress={() => handleSelectSize("medium")}
-                selected={size === "medium"}
+                onPress={() => handleSelectSize("m")}
+                selected={size === "m"}
               />
               <SelectPizzaSize
                 title="Grande"
-                onPress={() => handleSelectSize("large")}
-                selected={size === "large"}
+                onPress={() => handleSelectSize("g")}
+                selected={size === "g"}
               />
             </WrapperSelect>
 
             <InputsWrapper>
-              <InputNumber title="Número da mesa" />
-              <InputNumber title="Quantidade" />
+              <InputNumber
+                title="Número da mesa"
+                value={desk}
+                onChangeText={(value) => setDesk(value)}
+              />
+              <InputNumber
+                title="Quantidade"
+                value={String(quantity)}
+                onChangeText={(value) => setQuantity(Number(value))}
+              />
             </InputsWrapper>
 
-            <Total>Total: R$10,00</Total>
+            <Total>Total: {price * quantity}</Total>
 
             <Button title="Confirmar pedido" type="secondary" />
           </Content>

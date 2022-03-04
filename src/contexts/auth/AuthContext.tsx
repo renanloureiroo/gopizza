@@ -81,22 +81,17 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
   }
 
   useEffect(() => {
-    setIsStarted(true)
     const rehydrated = async () => {
-      if (isStarted) {
-        const userData = await AsyncStorage.getItem(USER_COLLECTION)
+      const userData = await AsyncStorage.getItem(USER_COLLECTION)
 
-        if (userData) {
-          const userFormatted = JSON.parse(userData) as User
+      if (userData) {
+        const userFormatted = JSON.parse(userData) as User
 
-          setUser(userFormatted)
-        }
+        setUser(userFormatted)
       }
     }
 
     rehydrated()
-
-    return () => setIsStarted(false)
   }, [])
 
   return (

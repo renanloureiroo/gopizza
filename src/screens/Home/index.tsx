@@ -43,7 +43,9 @@ export const Home = () => {
   }
 
   const handleOpen = (id: string) => {
-    navigate("product", { id })
+    const route = user.isAdmin ? "product" : "order"
+
+    navigate(route, { id })
   }
 
   const handleNewPizza = () => {

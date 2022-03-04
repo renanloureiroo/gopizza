@@ -1,9 +1,9 @@
 import React from "react"
-import { TextInput } from "react-native"
+import { TextInput, TextInputProps } from "react-native"
 
 import { Container, Input, Title } from "./styles"
 
-type Props = {
+type Props = TextInputProps & {
   title: string
 }
 

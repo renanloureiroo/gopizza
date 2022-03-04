@@ -211,7 +211,6 @@ export const Product = () => {
           .get()
           .then((response) => {
             const product = response.data() as Pizza
-            console.log(product)
 
             setInitialValues({
               name: product.name,
