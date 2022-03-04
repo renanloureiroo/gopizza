@@ -74,7 +74,7 @@ export const MenuCount = styled.Text`
 
 export const Content = styled.View`
   flex: 1;
-  padding: ${RFValue(24)}px;
+  padding: 0 ${RFValue(24)}px;
 `
 
 export const Footer = styled.View`

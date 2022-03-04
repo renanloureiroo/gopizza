@@ -11,7 +11,13 @@ export const Routes = () => {
   const { user } = useAuth()
   return (
     <NavigationContainer>
-      {!user ? <SignIn /> : user.isAdmin ? <UserStackRoutes /> : <SignIn />}
+      {!user ? (
+        <SignIn />
+      ) : user.isAdmin ? (
+        <UserStackRoutes />
+      ) : (
+        <UserTabRoutes />
+      )}
     </NavigationContainer>
   )
 }
