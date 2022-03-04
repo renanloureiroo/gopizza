@@ -4,31 +4,26 @@ import { Container, Photo, Status, Subtitle, Title } from "./styles"
 
 interface OrderCardProps {
   index: number
-  photo_url: string
-  status: "pronto" | "preparando" | "entregue"
-  name: string
-  desk_number: number
-  quantity: number
+  data: {
+    photo_url: string
+    status: "pronto" | "preparando" | "entregue"
+    name: string
+    desk_number: number
+    quantity: number
+  }
 }
 
-export const OrderCard = ({
-  index,
-  photo_url,
-  status,
-  name,
-  desk_number,
-  quantity,
-}: OrderCardProps) => {
+export const OrderCard = ({ index, data }: OrderCardProps) => {
   return (
     <Container index={index}>
-      <Photo source={{ uri: photo_url }} />
+      <Photo source={{ uri: data.photo_url }} />
 
-      <Title>{name}</Title>
+      <Title>{data.name}</Title>
       <Subtitle>
-        Mesa {desk_number} . Qnt {quantity}
+        Mesa {data.desk_number} . Qnt {data.quantity}
       </Subtitle>
 
-      <Status status={status}>{status}</Status>
+      <Status status={data.status}>{data.status}</Status>
     </Container>
   )
 }

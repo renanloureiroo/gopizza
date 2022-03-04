@@ -47,15 +47,7 @@ export const Orders = () => {
       <Content>
         {!!orders &&
           orders.map((order, index) => (
-            <OrderCard
-              index={index}
-              quantity={order.quantity}
-              status={order.status}
-              desk_number={order.desk_number}
-              key={order.id}
-              photo_url={order.photo_url}
-              name={order.name}
-            />
+            <OrderCard key={order.id} data={order} index={index} />
           ))}
       </Content>
     </Container>
