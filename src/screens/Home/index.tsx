@@ -87,7 +87,7 @@ export const Home = () => {
       <Header>
         <Greeting>
           <Emoticon source={EmoticonImage} />
-          <Title>Olá, Admin</Title>
+          <Title>Olá, {user.isAdmin ? "Admin" : "Garçom"}</Title>
 
           <TouchableOpacity style={{ marginLeft: "auto" }} onPress={signOut}>
             <Icon name="logout" size={24} color={theme.COLORS.TITLE} />
