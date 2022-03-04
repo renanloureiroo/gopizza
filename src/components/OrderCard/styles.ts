@@ -53,6 +53,7 @@ export const Status = styled.Text<StatusProps>`
   font-size: 12px;
   padding: 4px 16px;
   border-radius: 9999px;
+  text-transform: capitalize;
 
   ${({ theme, status }) => css`
     border-width: 1px;

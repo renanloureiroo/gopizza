@@ -68,7 +68,7 @@ export const Home = () => {
               ...doc.data(),
             }
           }) as Pizza[]
-          console.log(data)
+
           setPizzas(data)
         })
     } catch (err) {

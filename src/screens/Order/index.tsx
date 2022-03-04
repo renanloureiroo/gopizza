@@ -69,9 +69,13 @@ export const Order = () => {
       }
       const order = {
         desk_number: desk,
+        quantity,
         total_price: price * quantity,
+        photo_url: data.photo_url,
+        name: data.name,
         pizza_id: data.id,
         created_at: firestore.FieldValue.serverTimestamp(),
+        status: "preparando",
       }
       console.log(order)
       await firestore().collection("orders").add(order)
