@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { BackButton } from "@components/BackButton"
-import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native"
+import {
+  Alert,
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+} from "react-native"
 import { OrderNavigationProps } from "src/@types/navigation"
 import firestore from "@react-native-firebase/firestore"
 import {
@@ -22,7 +27,7 @@ import PizzaImage from "@assets/pizza.png"
 import { SelectPizzaSize } from "@components/SelectPizzaSize"
 import { InputNumber } from "@components/InputNumber"
 import { Button } from "@components/Button"
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 type Pizza = {
   id: string
@@ -40,31 +45,63 @@ export const Order = () => {
   const [size, setSize] = useState<"p" | "m" | "g">("p")
   const [data, setData] = useState<Pizza>({} as Pizza)
   const [fetchData, setFetchData] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [price, setPrice] = useState<number>(0)
 
-  const [desk, setDesk] = useState("")
+  const [desk, setDesk] = useState(0)
   const [quantity, setQuantity] = useState(1)
 
   const routes = useRoute()
   const { id } = routes.params as OrderNavigationProps
 
+  const { navigate, goBack } = useNavigation()
+
   const handleSelectSize = (size: "p" | "m" | "g") => {
     setSize(size)
   }
 
+  const handleNewOrder = async () => {
+    try {
+      setLoading(true)
+      if (!desk) {
+        throw new Error("Adicione o número da mesa!")
+      }
+      const order = {
+        desk_number: desk,
+        total_price: price * quantity,
+        pizza_id: data.id,
+        created_at: firestore.FieldValue.serverTimestamp(),
+      }
+      console.log(order)
+      await firestore().collection("orders").add(order)
+
+      navigate("home")
+    } catch (err) {
+      if (err.message === "Adicione o número da mesa!") {
+        Alert.alert(err.message)
+      } else {
+        Alert.alert("Não foi possível concluir o pedido!")
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    if (!fetchData) {
-      setFetchData(true)
-      firestore()
-        .collection("pizzas")
-        .doc(id)
-        .get()
-        .then((response) => {
-          const product = response.data() as Pizza
-          console.log(product)
-          setData(product)
-        })
+    if (id) {
+      if (!fetchData) {
+        setFetchData(true)
+        firestore()
+          .collection("pizzas")
+          .doc(id)
+          .get()
+          .then((response) => {
+            const product = response.data() as Pizza
+
+            setData({ id: response.id, ...product })
+          })
+      }
     }
 
     return () => setFetchData(false)
@@ -84,7 +121,7 @@ export const Order = () => {
       >
         <Header>
           <WrapperBackButton>
-            <BackButton />
+            <BackButton onPress={() => goBack()} />
           </WrapperBackButton>
           <WrapperProductImage>
             <ProductImage source={{ uri: data.photo_url }} />
@@ -118,8 +155,8 @@ export const Order = () => {
             <InputsWrapper>
               <InputNumber
                 title="Número da mesa"
-                value={desk}
-                onChangeText={(value) => setDesk(value)}
+                value={String(desk)}
+                onChangeText={(value) => setDesk(Number(value))}
               />
               <InputNumber
                 title="Quantidade"
@@ -130,7 +167,12 @@ export const Order = () => {
 
             <Total>Total: {price * quantity}</Total>
 
-            <Button title="Confirmar pedido" type="secondary" />
+            <Button
+              title="Confirmar pedido"
+              type="secondary"
+              isLoading={loading}
+              onPress={handleNewOrder}
+            />
           </Content>
         </ContentWrapper>
       </Container>
