@@ -20,7 +20,7 @@ export const OrderCard = ({ index, data }: OrderCardProps) => {
 
       <Title>{data.name}</Title>
       <Subtitle>
-        Mesa {data.desk_number} . Qnt {data.quantity}
+        Mesa {data.desk_number} - Qnt {data.quantity}
       </Subtitle>
 
       <Status status={data.status}>{data.status}</Status>

@@ -1,11 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Platform } from "react-native"
 import {
   BottomTabBar,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs"
 import { useTheme } from "styled-components/native"
-
+import firestore from "@react-native-firebase/firestore"
 import { Home } from "@screens/Home"
 import { Orders } from "@screens/Orders"
 import { ButtonMenu } from "@components/ButtonMenu"
@@ -13,7 +13,21 @@ import { ButtonMenu } from "@components/ButtonMenu"
 const { Navigator, Screen } = createBottomTabNavigator()
 
 export const UserTabRoutes = () => {
+  const [notification, setNotification] = useState("0")
+
   const theme = useTheme()
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection("orders")
+      .where("status", "==", "pronto")
+      .onSnapshot((querySnapShot) => {
+        const prontos = querySnapShot.docs.length
+        setNotification(String(prontos))
+      })
+
+    return () => subscriber()
+  }, [])
   return (
     <Navigator
       screenOptions={{
@@ -41,7 +55,11 @@ export const UserTabRoutes = () => {
         component={Orders}
         options={{
           tabBarIcon: ({ color }) => (
-            <ButtonMenu title="Pedidos" color={color} notification="5" />
+            <ButtonMenu
+              title="Pedidos"
+              color={color}
+              notification={notification}
+            />
           ),
         }}
       />
