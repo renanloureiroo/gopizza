@@ -26,7 +26,7 @@ export const OrderCard = ({ index, data }: OrderCardProps) => {
   }
 
   return (
-    <Container index={index}>
+    <Container index={index} onPress={handleState}>
       <Photo source={{ uri: data.photo_url }} />
 
       <Title>{data.name}</Title>

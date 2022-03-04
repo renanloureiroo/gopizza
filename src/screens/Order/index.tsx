@@ -51,7 +51,9 @@ export const Order = () => {
   const [quantity, setQuantity] = useState(1)
   const { user } = useAuth()
 
-  const amount = !!data.id ? data.prices_sizes[size] * quantity : "0.00"
+  const amount: string = !!data.id
+    ? String(data.prices_sizes[size] * quantity)
+    : "0.00"
 
   const routes = useRoute()
   const { id } = routes.params as OrderNavigationProps
@@ -72,7 +74,7 @@ export const Order = () => {
         desk_number: desk,
         water_id: user.id,
         quantity,
-        amount,
+        amount: Number(amount) * 100,
         photo_url: data.photo_url,
         name: data.name,
         pizza_id: data.id,
