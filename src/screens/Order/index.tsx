@@ -28,16 +28,16 @@ import { SelectPizzaSize } from "@components/SelectPizzaSize"
 import { InputNumber } from "@components/InputNumber"
 import { Button } from "@components/Button"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { useAuth } from "@hooks/auth"
 
 type Pizza = {
   id: string
   name: string
+
   name_insensitive: string
   photo_url: string
   prices_sizes: {
-    p: number
-    m: number
-    g: number
+    [key: string]: number
   }
 }
 
@@ -47,10 +47,11 @@ export const Order = () => {
   const [fetchData, setFetchData] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const [price, setPrice] = useState<number>(0)
-
   const [desk, setDesk] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const { user } = useAuth()
+
+  const amount = !!data.id ? data.prices_sizes[size] * quantity : "0.00"
 
   const routes = useRoute()
   const { id } = routes.params as OrderNavigationProps
@@ -69,15 +70,16 @@ export const Order = () => {
       }
       const order = {
         desk_number: desk,
+        water_id: user.id,
         quantity,
-        total_price: price * quantity,
+        amount,
         photo_url: data.photo_url,
         name: data.name,
         pizza_id: data.id,
         created_at: firestore.FieldValue.serverTimestamp(),
         status: "preparando",
       }
-      console.log(order)
+
       await firestore().collection("orders").add(order)
 
       navigate("home")
@@ -110,12 +112,6 @@ export const Order = () => {
 
     return () => setFetchData(false)
   }, [])
-
-  useEffect(() => {
-    if (!!data.prices_sizes) {
-      setPrice(data.prices_sizes[size])
-    }
-  }, [size, data])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -169,7 +165,7 @@ export const Order = () => {
               />
             </InputsWrapper>
 
-            <Total>Total: {price * quantity}</Total>
+            <Total>Total: R$ {amount}</Total>
 
             <Button
               title="Confirmar pedido"

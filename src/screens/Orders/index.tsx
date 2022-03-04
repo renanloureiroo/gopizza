@@ -5,10 +5,12 @@ import firestore from "@react-native-firebase/firestore"
 
 import { Container, Content, Header, Title } from "./styles"
 import { Order } from "@screens/Order"
+import { useAuth } from "@hooks/auth"
 
 type Order = {
   id: string
   name: string
+  water_id: string
   photo_url: string
   desk_number: number
   quantity: number
@@ -17,29 +19,24 @@ type Order = {
 
 export const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([])
+  const { user } = useAuth()
 
   useEffect(() => {
-    firestore()
+    const subscriber = firestore()
       .collection("orders")
-      .get()
-      .then((response) => {
+      .where("water_id", "==", user.id)
+      .onSnapshot((response) => {
         const data = response.docs.map((doc) => {
-          const responseData = doc.data() as Order
-
-          const order: Order = {
+          return {
             id: doc.id,
-            name: responseData.name,
-            photo_url: responseData.photo_url,
-            quantity: responseData.quantity,
-            status: responseData.status,
-            desk_number: responseData.desk_number,
-          }
-
-          return order
+            ...doc.data(),
+          } as Order
         })
-        console.log(data)
+
         setOrders(data)
       })
+
+    return () => subscriber()
   }, [])
 
   return (
