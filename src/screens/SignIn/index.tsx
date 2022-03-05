@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import Toast from "react-native-toast-message"
 
 import {
@@ -18,6 +18,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
   TouchableWithoutFeedback,
 } from "react-native"
 import { Button } from "@components/Button"
@@ -26,6 +27,8 @@ import { useAuth } from "@hooks/auth"
 export const SignIn = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const passwordRef = useRef<TextInput>(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -101,8 +104,11 @@ export const SignIn = () => {
                 placeholder="E-mail"
                 value={email}
                 onChangeText={setEmail}
+                onSubmitEditing={() => passwordRef.current.focus()}
+                blurOnSubmit={false}
               />
               <Input
+                ref={passwordRef}
                 placeholder="Senha"
                 type="password"
                 value={password}
