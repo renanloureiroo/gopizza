@@ -35,13 +35,13 @@ export const Input = React.forwardRef<TextInput, Props>((props, ref) => {
         <InputText
           {...rest}
           ref={ref}
-          secureTextEntry={type !== "email" || isVisible}
+          secureTextEntry={type !== "email" && !isVisible}
           themeInput={themeInput}
         />
         {type === "password" && (
           <VisibilityButton onPress={toggleVisibility}>
             <Icon
-              name={!!isVisible ? "visibility" : "visibility-off"}
+              name={isVisible ? "visibility" : "visibility-off"}
               size={RFPercentage(3.5)}
               color={theme.COLORS.PRIMARY_50}
             />
