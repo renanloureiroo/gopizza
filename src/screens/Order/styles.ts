@@ -45,16 +45,13 @@ export const ProductImage = styled.Image.attrs({ resizeMode: "contain" })`
 
 export const ContentWrapper = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    paddingHorizontal: 24,
-    paddingBottom: getBottomSpace(),
-  },
 })``
 
 export const Content = styled.View`
   align-items: center;
   width: 100%;
   margin-top: ${RFPercentage(17)}px;
+  padding: 0 24px;
 `
 
 export const Title = styled.Text`

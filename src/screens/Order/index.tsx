@@ -121,16 +121,16 @@ export const Order = () => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         enabled
       >
-        <Header>
-          <WrapperBackButton>
-            <BackButton onPress={() => goBack()} />
-          </WrapperBackButton>
-          <WrapperProductImage>
-            <ProductImage source={{ uri: data.photo_url }} />
-          </WrapperProductImage>
-        </Header>
-
         <ContentWrapper>
+          <Header>
+            <WrapperBackButton>
+              <BackButton onPress={() => goBack()} />
+            </WrapperBackButton>
+            <WrapperProductImage>
+              <ProductImage source={{ uri: data.photo_url }} />
+            </WrapperProductImage>
+          </Header>
+
           <Content>
             <Title>{data.name}</Title>
 
