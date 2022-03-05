@@ -28,7 +28,7 @@ export const Content = styled.ScrollView.attrs({
 
 export const BrandWrapper = styled.View`
   padding-top: ${getStatusBarHeight() + 50}px;
-  height: ${RFPercentage(50)}px;
+  height: ${RFPercentage(60)}px;
 `
 
 export const Brand = styled.Image.attrs({
