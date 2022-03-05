@@ -1,7 +1,10 @@
-import React, { FormEvent } from "react"
+import React from "react"
 import { RectButtonProps } from "react-native-gesture-handler"
 
-import { Container, Title, Loading } from "./styles"
+import { Container, Title, LoadingWrapper } from "./styles"
+import LottieView from "lottie-react-native"
+
+import LoadingAnimated from "@assets/loading.json"
 
 type Props = RectButtonProps & {
   type?: "primary" | "secondary"
@@ -17,8 +20,14 @@ export const Button = ({
   ...rest
 }: Props) => {
   return (
-    <Container {...rest} type={type} enabled={!isLoading}>
-      {isLoading ? <Loading /> : <Title>{title}</Title>}
+    <Container {...rest} type={type} enabled={isLoading}>
+      {isLoading ? (
+        <LoadingWrapper>
+          <LottieView source={LoadingAnimated} autoPlay loop />
+        </LoadingWrapper>
+      ) : (
+        <Title>{title}</Title>
+      )}
     </Container>
   )
 }
