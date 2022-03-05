@@ -114,8 +114,12 @@ export const Home = () => {
         <FlatList
           data={pizzas}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card data={item} onPress={() => handleOpen(item.id)} />
+          renderItem={({ item, index }) => (
+            <Card
+              data={item}
+              onPress={() => handleOpen(item.id)}
+              duration={300 + 100 * index}
+            />
           )}
           showsVerticalScrollIndicator={false}
         />

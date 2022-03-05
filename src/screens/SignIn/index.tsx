@@ -33,8 +33,9 @@ export const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      setLoading(true)
       if (!email || !password) return
+
+      setLoading(true)
       await signIn({ email, password })
     } catch (err) {
       setLoading(false)
@@ -112,11 +113,7 @@ export const SignIn = () => {
                 <ForgotPasswordLabel>Esqueci minha senha</ForgotPasswordLabel>
               </ForgotPasswordButton>
             </Form>
-            <Button
-              title="Entrar"
-              onPress={handleSignIn}
-              isLoading={!loading}
-            />
+            <Button title="Entrar" onPress={handleSignIn} isLoading={loading} />
           </Content>
           <Toast />
         </KeyboardAvoidingView>

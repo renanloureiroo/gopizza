@@ -15,12 +15,12 @@ type Props = RectButtonProps & {
 export const Button = ({
   type = "primary",
   isLoading = false,
-
   title,
+
   ...rest
 }: Props) => {
   return (
-    <Container {...rest} type={type} enabled={isLoading}>
+    <Container {...rest} type={type} enabled={!isLoading}>
       {isLoading ? (
         <LoadingWrapper>
           <LottieView source={LoadingAnimated} autoPlay loop />

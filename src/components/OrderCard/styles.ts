@@ -16,7 +16,7 @@ export const Container = styled.TouchableOpacity<Props>`
       : "border-left-width: 0.5px"};
     border-color: ${theme.COLORS.SHAPE};
   `}
-  width: 50%;
+  width: 100%;
   justify-content: center;
   align-items: center;
   padding: 24px;
