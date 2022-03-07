@@ -17,7 +17,6 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
   height: ${RFValue(149)}px;
   padding: 0 24px;
   padding-top: ${getStatusBarHeight() + 30}px;
-  justify-content: flex-end;
 `
 
 export const Greeting = styled.View`
@@ -42,9 +41,10 @@ export const Title = styled.Text`
 
 export const SearchWrapper = styled.View`
   width: 100%;
-  min-height: ${RFValue(48)}px;
+  top: -${RFValue(24)}px;
+  height: ${RFValue(48)}px;
 
-  bottom: -${RFValue(24)}px;
+  padding: 0 24px;
 `
 
 export const Menu = styled.View`
@@ -52,7 +52,7 @@ export const Menu = styled.View`
   align-items: center;
   justify-content: space-between;
 
-  padding: ${RFValue(50)}px 0 ${RFValue(22)}px 0;
+  padding: 0 0 ${RFValue(22)}px;
 
   margin-bottom: ${RFValue(20)}px;
 

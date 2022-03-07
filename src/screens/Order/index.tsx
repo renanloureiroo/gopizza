@@ -4,6 +4,7 @@ import {
   Alert,
   Keyboard,
   Platform,
+  ScrollView,
   TouchableWithoutFeedback,
 } from "react-native"
 import { OrderNavigationProps } from "src/@types/navigation"
@@ -14,16 +15,12 @@ import {
   ProductImage,
   Content,
   Title,
-  WrapperBackButton,
-  WrapperProductImage,
   WrapperSelect,
   SelectedTitle,
   InputsWrapper,
   Total,
-  ContentWrapper,
 } from "./styles"
 
-import PizzaImage from "@assets/pizza.png"
 import { SelectPizzaSize } from "@components/SelectPizzaSize"
 import { InputNumber } from "@components/InputNumber"
 import { Button } from "@components/Button"
@@ -121,21 +118,18 @@ export const Order = () => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         enabled
       >
-        <ContentWrapper>
-          <Header>
-            <WrapperBackButton>
-              <BackButton onPress={() => goBack()} />
-            </WrapperBackButton>
-            <WrapperProductImage>
-              <ProductImage source={{ uri: data.photo_url }} />
-            </WrapperProductImage>
-          </Header>
-
+        <Header>
+          <BackButton onPress={() => goBack()} style={{ marginBottom: 80 }} />
+        </Header>
+        <ProductImage source={{ uri: data.photo_url }} />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ marginTop: -120 }}
+        >
           <Content>
             <Title>{data.name}</Title>
 
             <SelectedTitle>Selecione um tamanho</SelectedTitle>
-
             <WrapperSelect>
               <SelectPizzaSize
                 title="Pequena"
@@ -153,7 +147,6 @@ export const Order = () => {
                 selected={size === "g"}
               />
             </WrapperSelect>
-
             <InputsWrapper>
               <InputNumber
                 title="Número da mesa"
@@ -166,9 +159,7 @@ export const Order = () => {
                 onChangeText={(value) => setQuantity(Number(value))}
               />
             </InputsWrapper>
-
             <Total>Total: R$ {amount}</Total>
-
             <Button
               title="Confirmar pedido"
               type="secondary"
@@ -176,7 +167,7 @@ export const Order = () => {
               onPress={handleNewOrder}
             />
           </Content>
-        </ContentWrapper>
+        </ScrollView>
       </Container>
     </TouchableWithoutFeedback>
   )

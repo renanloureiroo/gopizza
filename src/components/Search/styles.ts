@@ -4,7 +4,7 @@ import styled, { css } from "styled-components/native"
 
 export const Container = styled.View`
   flex: 1;
-  max-height: ${RFValue(48)}px;
+  height: ${RFValue(48)}px;
   flex-direction: row;
   align-items: center;
 `

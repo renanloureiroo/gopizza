@@ -93,15 +93,15 @@ export const Home = () => {
             <Icon name="logout" size={24} color={theme.COLORS.TITLE} />
           </TouchableOpacity>
         </Greeting>
-        <SearchWrapper>
-          <Search
-            value={search}
-            onChangeText={setSearch}
-            onClear={handleClear}
-            onSearch={handleSearch}
-          />
-        </SearchWrapper>
       </Header>
+      <SearchWrapper>
+        <Search
+          value={search}
+          onChangeText={setSearch}
+          onClear={handleClear}
+          onSearch={handleSearch}
+        />
+      </SearchWrapper>
       <Content>
         <Menu>
           <MenuTitle>Cardápio</MenuTitle>
